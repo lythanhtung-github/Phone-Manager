@@ -1,7 +1,5 @@
 package vn.ltt.shop.model;
 
-import java.time.Instant;
-
 public class OrderItem {
     private long id;
     private double price;

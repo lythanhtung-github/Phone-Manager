@@ -7,6 +7,7 @@ import vn.ltt.shop.service.*;
 import vn.ltt.shop.utils.AppUtils;
 import vn.ltt.shop.utils.InstantUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -80,7 +81,7 @@ public class OrderItemView {
                 }
                 showOrderItem(orderItemService.findByOrderId(orderId), InputOption.UPDATE);
                 setProductQuantity(productId, -orderItemService.findById(id).getQuantity());
-                System.out.printf("Đã thêm %s số lượng %s vào giỏ hàng.\n", product.getName(), quantity);
+                System.out.printf("Đã thêm '%s' số lượng '%s' vào giỏ hàng.\n", product.getName(), quantity);
             } catch (Exception e) {
                 System.out.println("Lỗi cú pháp. Vui lòng nhập lại!");
                 System.out.println(e.getMessage());
@@ -204,7 +205,6 @@ public class OrderItemView {
     }
 
     private long inputProductId(InputOption option) {
-        long id;
         switch (option) {
             case ADD:
                 System.out.println("Nhập id sản phẩm: ");
@@ -216,6 +216,7 @@ public class OrderItemView {
                 System.out.println("Nhập Id sản phẩm muốn xóa: ");
                 break;
         }
+        long id;
         boolean isTrue = true;
         do {
             id = AppUtils.retryParseLong();
@@ -241,6 +242,7 @@ public class OrderItemView {
                 switch (option) {
                     case 1:
                         updateProductId(orderItem);
+                        isTrue = false;
                         break;
                     case 2:
                         updateQuantity(orderItem);
@@ -275,6 +277,9 @@ public class OrderItemView {
                 orderItemService.update(orderItem);
                 System.out.println("Chỉnh sửa sản phẩm thành công!");
                 setGrandTotal(orderItem.getOrderId());
+                List<OrderItem> orderItems = new ArrayList<>();
+                orderItems.add(orderItem);
+                showOrderItem(orderItems, InputOption.UPDATE);
                 AppUtils.pressAnyKeyToContinue();
             } catch (Exception e) {
                 System.out.println("Sai cú pháp. Vui lòng nhập lại!");
@@ -293,6 +298,9 @@ public class OrderItemView {
                 setGrandTotal(orderItem.getOrderId());
                 System.out.printf("Chỉnh sửa số lượng sản phầm từ %s thành %s.\n", oldQuantity, newQuantity);
                 setGrandTotal(orderItem.getOrderId());
+                List<OrderItem> orderItems = new ArrayList<>();
+                orderItems.add(orderItem);
+                showOrderItem(orderItems, InputOption.UPDATE);
                 AppUtils.pressAnyKeyToContinue();
             } catch (Exception e) {
                 System.out.println("Sai cú pháp. Vui lòng nhập lại!");
@@ -301,9 +309,9 @@ public class OrderItemView {
     }
 
     private static void menuUpdateOrderItem() {
-        System.out.println("░░░░░░░░░░ UPDATE PRODUCT ░░░░░░░░░");
+        System.out.println("░░░░░░░ CHỈNH SỬA SẢN PHẨM  ░░░░░░░");
         System.out.println("░                                 ░");
-        System.out.println("░      1. Chỉnh sửa sản phẩm.     ░");
+        System.out.println("░      1. Đổi sản phẩm.           ░");
         System.out.println("░      2. Chỉnh sửa số lượng.     ░");
         System.out.println("░      3. Trở lại.                ░");
         System.out.println("░      0. Thoát.                  ░");
@@ -323,7 +331,7 @@ public class OrderItemView {
                 option = Integer.parseInt(scanner.nextLine());
                 switch (option) {
                     case 1: {
-                        OrderItem orderItem =orderItemService.findById(id);
+                        OrderItem orderItem = orderItemService.findById(id);
                         setProductQuantity(orderItem.getProductId(), orderItem.getQuantity());
                         orderItemService.deleteById(id);
                         System.out.println("Xóa thành công!");
@@ -385,10 +393,4 @@ public class OrderItemView {
         product.setQuantity(product.getQuantity() + quantityDifference);
         productService.update(product);
     }
-
-//    public static void main(String[] args) {
-//        OrderItemView orderItemView = new OrderItemView();
-//
-//        orderItemView.showOrderItem(OrderItemService.getInstance().findAll(), InputOption.UPDATE);
-//    }
 }

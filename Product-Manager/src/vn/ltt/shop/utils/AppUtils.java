@@ -11,7 +11,7 @@ public class AppUtils {
     public static String retryString() {
         String result;
         while (((result = scanner.nextLine()).trim()).isEmpty()) {
-            System.out.println("Chuỗi rỗng");
+            System.out.println("Chuỗi rỗng hoặc chỉ chứa khoảng trống!");
             System.out.print("Vui lòng nhập lại: ");
         }
         return result;
@@ -51,27 +51,29 @@ public class AppUtils {
 
     public static void pressAnyKeyToContinue() {
         System.out.print("Ấn nút bất kỳ để tiếp tục. ");
-        scanner.nextLine();
+        String s = scanner.nextLine();
     }
 
     public static boolean isRetry(InputOption inputOption) {
         do {
             switch (inputOption) {
                 case ADD:
-                    System.out.println("===> Chọn 'y' để tiếp tục thêm \t|\t 'q' để trở lại \t|\t 't' để thoát");
+                    System.out.println("===> Chọn 'y' để tiếp tục thêm \t|\t 'q' để trở lại \t|\t 't' để thoát.");
                     break;
                 case UPDATE:
-                    System.out.println("===> Chọn 'y' để tiếp tục sửa \t|\t 'q' để trở lại \t|\t 't' để thoát");
+                    System.out.println("===> Chọn 'y' để tiếp tục sửa \t|\t 'q' để trở lại \t|\t 't' để thoát.");
                     break;
                 case DELETE:
-                    System.out.println("===> Chọn 'y' để tiếp tục xóa \t|\t 'q' để trở lại \t|\t 't' để thoát");
+                    System.out.println("===> Chọn 'y' để tiếp tục xóa \t|\t 'q' để trở lại \t|\t 't' để thoát.");
                     break;
                 case SHOW:
-                    System.out.println("===> Chọn 'q' để trở lại \t|\t 't' để thoát");
+                    System.out.println("===> Chọn 'q' để trở lại \t|\t 't' để thoát.");
                     break;
                 case FIND:
-                    System.out.println("===> Chọn 'y' để tiếp tục tìm kiếm \t|\t 'q' để quay lại\t|\t 't' để thoát");
+                    System.out.println("===> Chọn 'y' để tiếp tục tìm kiếm \t|\t 'q' để quay lại\t|\t 't' để thoát.");
                     break;
+                case STATISTICAL:
+                    System.out.println("===> Chọn 'y' để tiếp tục xem \t|\t 'q' để quay lại\t|\t 't' để thoát.");
                 default:
                     throw new IllegalStateException("Unexpected value: " + inputOption);
             }

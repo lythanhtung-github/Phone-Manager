@@ -38,7 +38,8 @@ public class LoginView {
                             System.out.println("Tài khoản hoặc mật khẩu không đúng!");
                             AppUtils.pressAnyKeyToContinue();
                         } else {
-                            System.out.printf("===> Đăng nhập thành công. Xin chào %s: %s\n", user.getRole(), user.getFullName());
+                            System.out.println("\n    ===> ĐĂNG NHẬP THÀNH CÔNG <===\n");
+                            System.out.printf("===> XIN CHÀO %s: %s <===\n\n", user.getRole(), user.getFullName().toUpperCase());
                             AppUtils.pressAnyKeyToContinue();
                             if (role == Role.ADMIN) {
                                 AdminView.launch(user.getId());

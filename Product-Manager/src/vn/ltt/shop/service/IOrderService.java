@@ -20,9 +20,15 @@ public interface IOrderService {
 
     List<Order> findByFullName(String value);
 
+    List<Order> findByFullName(String value, long userId);
+
     List<Order> findByPhone(String value);
 
+    List<Order> findByPhone(String value, long userId);
+
     List<Order> findByAddress(String value);
+
+    List<Order> findByAddress(String value, long userId);
 
     List<Order> sortById(TypeSort type, long userId);
 

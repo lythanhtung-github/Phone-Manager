@@ -107,6 +107,21 @@ public class OrderService implements IOrderService {
     }
 
     @Override
+    public List<Order> findByFullName(String value, long userId) {
+        List<Order> orders = findOrderByUserId(userId);
+        List<Order> ordersFind = new ArrayList<>();
+        for (Order item : orders) {
+            if ((item.getFullName().toUpperCase()).contains(value.toUpperCase())) {
+                ordersFind.add(item);
+            }
+        }
+        if (ordersFind.isEmpty()) {
+            return null;
+        }
+        return ordersFind;
+    }
+
+    @Override
     public List<Order> findByPhone(String value) {
         List<Order> orders = findAll();
         List<Order> ordersFind = new ArrayList<>();
@@ -122,8 +137,38 @@ public class OrderService implements IOrderService {
     }
 
     @Override
+    public List<Order> findByPhone(String value, long userId) {
+        List<Order> orders = findOrderByUserId(userId);
+        List<Order> ordersFind = new ArrayList<>();
+        for (Order item : orders) {
+            if ((item.getPhone().toUpperCase()).contains(value.toUpperCase())) {
+                ordersFind.add(item);
+            }
+        }
+        if (ordersFind.isEmpty()) {
+            return null;
+        }
+        return ordersFind;
+    }
+
+    @Override
     public List<Order> findByAddress(String value) {
         List<Order> orders = findAll();
+        List<Order> ordersFind = new ArrayList<>();
+        for (Order item : orders) {
+            if ((item.getAddress().toUpperCase()).contains(value.toUpperCase())) {
+                ordersFind.add(item);
+            }
+        }
+        if (ordersFind.isEmpty()) {
+            return null;
+        }
+        return ordersFind;
+    }
+
+    @Override
+    public List<Order> findByAddress(String value, long userId) {
+        List<Order> orders = findOrderByUserId(userId);
         List<Order> ordersFind = new ArrayList<>();
         for (Order item : orders) {
             if ((item.getAddress().toUpperCase()).contains(value.toUpperCase())) {

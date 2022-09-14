@@ -22,22 +22,22 @@ public class UserView {
     }
 
     public void showUser(List<User> users, InputOption option) {
-        System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ DANH SÁCH TÀI KHOẢN ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
-        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-        System.out.printf("| %-5s%-9s | %-5s%-12s | %-6s%-14s | %-13s%-20s | %-6s%-8s | %-4s%-11s | %-1s%-6s | %-4s%-18s | %-2s%-20s |\n",
+        System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ DANH SÁCH TÀI KHOẢN ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("| %-5s%-9s | %-5s%-12s | %-6s%-14s | %-13s%-20s | %-6s%-8s | %-2s%-22s | %-1s%-6s | %-4s%-18s | %-2s%-20s |\n",
                 "", "ID",
                 "", "TÀI KHOẢN",
                 "", "HỌ TÊN",
-                "", "Email",
+                "", "EMAIL",
                 "", "SĐT",
                 "", "ĐỊA CHỈ",
                 "", "QUYỀN",
                 "", "THỜI GIAN TẠO",
                 "", "THỜI GIAN CHỈNH SỬA"
         );
-        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         for (User user : users) {
-            System.out.printf("| %-2s%-12s | %-2s%-15s | %-2s%-18s | %-3s%-30s | %-2s%-12s | %-2s%-13s | %-1s%-6s | %-2s%-20s | %-2s%-20s |\n",
+            System.out.printf("| %-2s%-12s | %-2s%-15s | %-1s%-19s | %-3s%-30s | %-2s%-12s | %-2s%-22s | %-1s%-6s | %-2s%-20s | %-2s%-20s |\n",
                     "", user.getId(),
                     "", user.getUserName(),
                     "", user.getFullName(),
@@ -49,7 +49,7 @@ public class UserView {
                     "", user.getUpdatedAt() == null ? "" : InstantUtils.instantToString(user.getUpdatedAt())
             );
         }
-        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         if (option != InputOption.UPDATE && option != InputOption.DELETE && option != InputOption.FIND) {
             AppUtils.pressAnyKeyToContinue();
         }
@@ -253,8 +253,8 @@ public class UserView {
 
     private void findById() {
         showUser(userService.findAll(), InputOption.FIND);
-        System.out.println("░░░░░░░░░░ FIND BY ID ░░░░░░░░░░");
-        System.out.print("Enter id: ");
+        System.out.println("░░░░░░░░ TÌM KIẾM THEO ID ░░░░░░░░");
+        System.out.print("Nhập id: ");
         long value = Long.parseLong(scanner.nextLine());
         User user = userService.findById(value);
         if (user != null) {
@@ -262,77 +262,77 @@ public class UserView {
             usersFind.add(user);
             showUser(usersFind, InputOption.FIND);
         } else {
-            System.out.println("Do not found");
+            System.out.println("Không tìm thấy!");
         }
     }
 
     private void findByAddress() {
         showUser(userService.findAll(), InputOption.FIND);
-        System.out.println("░░░░░░░ FIND BY ADDRESS ░░░░░░░░");
-        System.out.print("Enter address: ");
+        System.out.println("░░░░░ TÌM KIẾM THEO ĐỊA CHỈ ░░░░░░");
+        System.out.print("Nhập địa chỉ: ");
         String value = scanner.nextLine();
         List<User> usersFind = userService.findByAddress(value);
         if (usersFind != null) {
             showUser(usersFind, InputOption.FIND);
         } else {
-            System.out.println("Do not found");
+            System.out.println("Không tìm thấy!");
         }
     }
 
     private void findByPhone() {
         showUser(userService.findAll(), InputOption.FIND);
-        System.out.println("░░░░░░░░ FIND BY PHONE ░░░░░░░░░");
+        System.out.println("░░░░░░ TÌM KIẾM BẰNG SĐT ░░░░░░░");
         System.out.print("Enter phone: ");
         String value = scanner.nextLine();
         List<User> usersFind = userService.findByPhone(value);
         if (usersFind != null) {
             showUser(usersFind, InputOption.FIND);
         } else {
-            System.out.println("Do not found");
+            System.out.println("Không tìm thấy!");
         }
     }
 
     private void findByEmail() {
         showUser(userService.findAll(), InputOption.FIND);
-        System.out.println("░░░░░░░░ FIND BY EMAIL ░░░░░░░░░");
-        System.out.print("Enter email: ");
+        System.out.println("░░░░░░░░ TÌM KIẾM BẰNG EMAIL ░░░░░░░░░");
+        System.out.print("Nhập email: ");
         String value = scanner.nextLine();
         List<User> usersFind = userService.findByEmail(value);
         if (usersFind != null) {
             showUser(usersFind, InputOption.FIND);
         } else {
-            System.out.println("Do not found");
+            System.out.println("Không tìm thấy!");
         }
     }
 
     private void findByFullName() {
         showUser(userService.findAll(), InputOption.FIND);
-        System.out.println("░░░░░░ FIND BY FULL NAME ░░░░░░░");
-        System.out.print("Enter full name: ");
+        System.out.println("░░░░░░ TÌM KIẾM BẰNG TÊN ░░░░░░░");
+        System.out.print("Nhập tên người dùng: ");
         String value = scanner.nextLine();
         List<User> usersFind = userService.findByFullName(value);
         if (usersFind != null) {
             showUser(usersFind, InputOption.FIND);
         } else {
-            System.out.println("Do not found");
+            System.out.println("Không tìm thấy!");
         }
     }
 
     private void findByUserName() {
         showUser(userService.findAll(), InputOption.FIND);
-        System.out.println("░░░░░░ FIND BY USER NAME ░░░░░░░");
-        System.out.print("Enter user name: ");
+        System.out.println("░░░░░░ TÌM KIẾM BẰNG TÀI KHOẢN ░░░░░░░");
+        System.out.print("Nhập tên tài khoản: ");
         String value = scanner.nextLine();
         List<User> usersFind = userService.findByUserName(value);
         if (usersFind != null) {
             showUser(usersFind, InputOption.FIND);
         } else {
-            System.out.println("Do not found");
+            System.out.println("Không tìm thấy!");
         }
     }
 
     private void sortById() {
-        System.out.println("░░░░░░░░░░ SORT BY ID ░░░░░░░░░░");
+        System.out.println("░░░░░░░░ SẮP XẾP THEO ID ░░░░░░░░");
         menuSortASCOrDESC();
         int option;
         try {
@@ -355,7 +355,7 @@ public class UserView {
     }
 
     private void sortByUserName() {
-        System.out.println("░░░░░░░░░░ SORT BY USER NAME ░░░░░░░░░░");
+        System.out.println("░░░░░░░░ SẮP XẾP THEO TÀI KHOẢN ░░░░░░░░");
         menuSortASCOrDESC();
         int option;
         try {
@@ -378,7 +378,7 @@ public class UserView {
     }
 
     private void sortByFullName() {
-        System.out.println("░░░░░░░░░░ SORT BY FULL NAME ░░░░░░░░░░");
+        System.out.println("░░░░░░░░ SẮP XẾP THEO TÊN NGƯỜI DÙNG ░░░░░░░░");
         menuSortASCOrDESC();
         int option;
         try {
@@ -401,7 +401,7 @@ public class UserView {
     }
 
     private void sortByEmail() {
-        System.out.println("░░░░░░░░░░ SORT BY EMAIL ░░░░░░░░░░");
+        System.out.println("░░░░░░░░░░ SẮP XẾP THEO EMAIL ░░░░░░░░░░");
         menuSortASCOrDESC();
         int option;
         try {
@@ -424,7 +424,7 @@ public class UserView {
     }
 
     private void sortByPhone() {
-        System.out.println("░░░░░░░░░░ SORT BY PHONE ░░░░░░░░░░");
+        System.out.println("░░░░░░░░░░ SẮP XẾP THEO SĐT ░░░░░░░░░░");
         menuSortASCOrDESC();
         int option;
         try {
@@ -447,7 +447,7 @@ public class UserView {
     }
 
     private void sortByRole() {
-        System.out.println("░░░░░░░░░░ SORT BY ROLE ░░░░░░░░░░");
+        System.out.println("░░░░░░░░ SẮP XẾP THEO QUYỀN NGƯỜI DÙNG ░░░░░░░░");
         menuSortASCOrDESC();
         int option;
         try {
@@ -470,7 +470,7 @@ public class UserView {
     }
 
     private void sortByAddress() {
-        System.out.println("░░░░░░░░░░ SORT BY ADDRESS ░░░░░░░░░░");
+        System.out.println("░░░░░░░░░░ SẮP XẾP THEO ĐỊA CHỈ ░░░░░░░░░░");
         menuSortASCOrDESC();
         int option;
         try {
@@ -588,7 +588,7 @@ public class UserView {
     private String inputPhone(InputOption option) {
         switch (option) {
             case ADD:
-                System.out.println("Nhập số điện thoại của bạn (VD: 0123456789)");
+                System.out.println("Nhập số điện thoại của bạn (Số điện thoại bao gồm 10 chữ số, bắt đầu bằng số 0. VD: 0123456789)");
                 break;
             case UPDATE:
                 System.out.println("Nhập số điện thoại mới: ");
@@ -598,12 +598,12 @@ public class UserView {
         String phone;
         do {
             if (!ValidateUtils.isPhoneValid(phone = scanner.nextLine())) {
-                System.out.println("Định dạng số điện thoại không đúng, vui lòng nhập lại!");
+                System.out.println("Số điện thoại bao gồm 10 chữ số, bắt đầu bằng số 0 (VD: 0123456789). Vui lòng nhập lại!");
                 System.out.print(" => ");
                 continue;
             }
             if (userService.existsByPhone(phone)) {
-                System.out.println("Số điện thoại " + phone + "đã tồn tại.Vui lòng nhập lại !");
+                System.out.println("Số điện thoại " + phone + "đã tồn tại. Vui lòng nhập lại !");
                 System.out.print(" => ");
                 continue;
             }
@@ -642,7 +642,7 @@ public class UserView {
     private String inputAddress(InputOption option) {
         switch (option) {
             case ADD:
-                System.out.println("Nhập địa chỉ (Ký tự đầu của từng từ phải viết hoa, VD: Hue)");
+                System.out.println("Nhập địa chỉ (Ký tự đầu của từng từ phải viết hoa, VD: Huế)");
                 break;
             case UPDATE:
                 System.out.println("Nhập địa chỉ mới: ");
@@ -651,7 +651,7 @@ public class UserView {
         System.out.print(" => ");
         String address;
         while (!ValidateUtils.isAddressValid(address = scanner.nextLine())) {
-            System.out.println("Địa chỉ không đúng định dạng, vui lòng nhập lại");
+            System.out.println("Địa chỉ không đúng định dạng, vui lòng nhập lại!");
             System.out.print(" => ");
         }
         return address;
@@ -693,12 +693,12 @@ public class UserView {
         String username;
         do {
             if (!ValidateUtils.isUsernameValid(username = AppUtils.retryString())) {
-                System.out.println(username + " của bạn không đúng định dạng! Vui lòng kiểm tra và nhập lại ");
+                System.out.println(username + " của bạn không đúng định dạng! Vui lòng kiểm tra và nhập lại!");
                 System.out.println(" => ");
                 continue;
             }
             if (userService.existsByUserName(username)) {
-                System.out.println(username + " đã tồn tại. Vui lòng nhập lại");
+                System.out.println(username + " đã tồn tại. Vui lòng nhập lại!");
                 System.out.print(" => ");
                 continue;
             }

@@ -2,6 +2,7 @@ package vn.ltt.shop.view;
 
 import vn.ltt.shop.model.Order;
 import vn.ltt.shop.service.OrderService;
+import vn.ltt.shop.utils.AppUtils;
 
 import java.util.List;
 import java.util.Scanner;
@@ -36,7 +37,7 @@ public class OrderViewLauncher {
                         orderView.addOrder(userId);
                         break;
                     case UPDATE:
-                        orderView.updateOrder();
+                        orderView.updateOrder(userId);
                         break;
                     case DELETE:
                         orderView.deleteOrder();
@@ -73,17 +74,26 @@ public class OrderViewLauncher {
             try {
                 int option = Integer.parseInt(scanner.nextLine());
                 switch (option) {
-                    case SHOW:
+                    case SHOW: {
                         List<Order> orders = orderView.findAllByUserId(userId);
+                        if (orders.isEmpty()) {
+                            System.out.println("Bạn chưa có đơn hàng nào!");
+                            AppUtils.pressAnyKeyToContinue();
+                            break;
+                        }
                         orderView.showOrder(orders, InputOption.SHOW);
                         break;
+                    }
                     case ADD:
                         orderView.addOrder(userId);
                         break;
-                    case 3:
-                        orderView.memberFindOrder(userId);
+                    case UPDATE:
+                        orderView.updateOrder(userId);
                         break;
                     case 4:
+                        orderView.memberFindOrder(userId);
+                        break;
+                    case 5:
                         orderView.memberSortOrder(userId);
                         break;
                     case RETURN:
@@ -110,7 +120,7 @@ public class OrderViewLauncher {
         System.out.println("░                                       ░");
         System.out.println("░       1. Hiện danh sách đơn hàng.     ░");
         System.out.println("░       2. Thêm đơn hàng.               ░");
-        System.out.println("░       3. Sửa đơn hàng.                ░");
+        System.out.println("░       3. Chỉnh sửa đơn hàng.          ░");
         System.out.println("░       4. Xóa đơn hàng.                ░");
         System.out.println("░       5. Tìm kiếm đơn hàng.           ░");
         System.out.println("░       6. Sắp xếp đơn hàng.            ░");
@@ -127,13 +137,19 @@ public class OrderViewLauncher {
         System.out.println("░                                       ░");
         System.out.println("░       1. Hiện danh sách đơn hàng.     ░");
         System.out.println("░       2. Thêm đơn hàng.               ░");
-        System.out.println("░       3. Tìm kiếm đơn hàng.           ░");
-        System.out.println("░       4. Sắp xếp đơn hàng.            ░");
+        System.out.println("░       3. Chỉnh sửa đơn hàng.          ░");
+        System.out.println("░       4. Tìm kiếm đơn hàng.           ░");
+        System.out.println("░       5. Sắp xếp đơn hàng.            ░");
         System.out.println("░       7. Trở lại.                     ░");
         System.out.println("░       0. Thoát.                       ░");
         System.out.println("░                                       ░");
         System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
         System.out.println("Nhập lựa chọn: ");
         System.out.print("=> ");
+    }
+
+
+    public static void statistical(){
+        orderView.statistical();
     }
 }

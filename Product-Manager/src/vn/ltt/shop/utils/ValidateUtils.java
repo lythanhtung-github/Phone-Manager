@@ -11,6 +11,7 @@ public class ValidateUtils {
     private static final String ADDRESS_PATTERN = "^([A-ZÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬĐÈẺẼÉẸÊỀỂỄẾỆÌỈĨÍỊÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢÙỦŨÚỤƯỪỬỮỨỰỲỶỸÝỴ][a-zàảãáạăằẳẵắặâầẩẫấậđèẻẽéẹêềểễếệiìỉĩíịòỏõóọôồổỗốộơờởỡớợùủũúụỤưừửữứựỳỷỹýỵ]{0,6} ?)*$";
     private static final String PRODUCT_NAME_PATTERN = "^([A-Z]?[A-Za-z]+ ?[0-9]* ?)+$";
     private static final String MANUFACTURER_PATTERN = "^[A-Z]+$";
+    private static final String DATE_PATTERN = "^(0?[1-9]|[12][0-9]|3[01])[\\-](0?[1-9]|1[012])[\\-]\\d{4}$";
 
     public static boolean isUsernameValid(String userName) {
         return Pattern.compile(USERNAME_PATTERN).matcher(userName).matches();
@@ -42,5 +43,9 @@ public class ValidateUtils {
 
     public static boolean isManufacturerValid(String manufacturer) {
         return Pattern.compile(MANUFACTURER_PATTERN).matcher(manufacturer).matches();
+    }
+
+    public static boolean isDateValid(String date) {
+        return Pattern.compile(DATE_PATTERN).matcher(date).matches();
     }
 }

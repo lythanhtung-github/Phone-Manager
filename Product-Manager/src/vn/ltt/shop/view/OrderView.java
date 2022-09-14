@@ -28,6 +28,60 @@ public class OrderView {
         userService = UserService.getInstance();
     }
 
+    public void statistical() {
+        System.out.println("░░░░░░░░░░░░░░░ THỐNG KÊ ░░░░░░░░░░░░░░");
+        String date = inputDate();
+        List<Order> ordersFind = new ArrayList<>();
+        List<Order> orders = orderService.findAll();
+        for (Order order : orders) {
+            String createdDate = InstantUtils.instantToStringDate(order.getCreatedAt());
+            if (date.equals(createdDate)) {
+                ordersFind.add(order);
+            }
+        }
+        System.out.printf("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ DOANH THU NGÀY %s ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n", date);
+        System.out.println("░                                                                                                     ░");
+        System.out.println("░-----------------------------------------------------------------------------------------------------░");
+        System.out.printf("░ %-2s%-5s | %-8s%-16s | %-5s%-9s | %-6s%-14s | %-5s%-17s ░\n",
+                "", "STT",
+                "", "KHÁCH HÀNG",
+                "", "SĐT",
+                "", "ĐỊA CHỈ",
+                "", "THÀNH TIỀN"
+        );
+        System.out.println("░-----------------------------------------------------------------------------------------------------░");
+        double totalRevenue = 0;
+        for (int i = 0; i < ordersFind.size(); i++) {
+            Order order = ordersFind.get(i);
+            totalRevenue += order.getGrandTotal();
+            System.out.printf("░ %-3s%-4s | %-2s%-22s | %-2s%-12s | %-2s%-18s | %-2s%-20s ░\n",
+                    "", i + 1,
+                    "", order.getFullName(),
+                    "", order.getPhone(),
+                    "", order.getAddress(),
+                    "", AppUtils.doubleToVND(order.getGrandTotal())
+            );
+        }
+        System.out.println("░-----------------------------------------------------------------------------------------------------░");
+        System.out.println("░                                                                                                     ░");
+        System.out.println("░-----------------------------------------------------------------------------------------------------░");
+        System.out.printf("░                                                         TỔNG DOANH THU: %-20s%6s  ░\n", AppUtils.doubleToVND(totalRevenue), "");
+        System.out.println("░-----------------------------------------------------------------------------------------------------░");
+        System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
+        AppUtils.pressAnyKeyToContinue();
+    }
+
+    private String inputDate() {
+        System.out.println("Nhập ngày (VD: 02-09-1945): ");
+        System.out.print(" => ");
+        String date;
+        while (!ValidateUtils.isDateValid(date = scanner.nextLine().trim())) {
+            System.out.println("Ngày, tháng, năm được phân tách bởi dấu '-' (VD: VD: 02-09-1945)");
+            System.out.print(" => ");
+        }
+        return date;
+    }
+
     public void showOrder(List<Order> orders, InputOption option) {
 
         System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ DANH SÁCH ĐƠN HÀNG ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
@@ -56,9 +110,38 @@ public class OrderView {
             );
         }
         System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-        if (option != InputOption.UPDATE && option != InputOption.DELETE && option != InputOption.FIND) {
-            AppUtils.pressAnyKeyToContinue();
+        if (option == InputOption.SHOW) {
+            showAllItemOfOrder();
         }
+    }
+
+    public void showAllItemOfOrder() {
+        boolean isTrue = true;
+        long orderId;
+        do {
+            System.out.println("Chọn 'y' để xem chi tiết đơn hàng \t|\t 'i' để in hóa đơn \t|\t 'q' để trở lại.");
+            System.out.print(" => ");
+            String option = scanner.nextLine();
+            switch (option) {
+                case "y":
+                    System.out.println("░░░░░ XEM CHI TIẾT ĐƠN HÀNG ░░░░");
+                    orderId = inputId(InputOption.SHOW);
+                    orderItemView.showOrderItem(orderItemService.findByOrderId(orderId), InputOption.UPDATE);
+                    break;
+                case "i":
+                    System.out.println("░░░░░░░ IN HÓA ĐƠN ░░░░░░");
+                    orderId = inputId(InputOption.SHOW);
+                    orderItemView.printProductInvoice(orderId);
+                    break;
+                case "q":
+                    isTrue = false;
+                    break;
+                default:
+                    System.out.println("Lựa chọn sai. Vui lòng nhập lại!");
+                    System.out.print(" => ");
+                    break;
+            }
+        } while (isTrue);
     }
 
     public void addOrder(long userId) {
@@ -84,7 +167,7 @@ public class OrderView {
     private String inputAddress(InputOption option) {
         switch (option) {
             case ADD:
-                System.out.println("Nhập địa chỉ (Ký tự đầu của từng từ phải viết hoa, VD: Hue)");
+                System.out.println("Nhập địa chỉ (Ký tự đầu của từng từ phải viết hoa, VD: Huế)");
                 break;
             case UPDATE:
                 System.out.println("Nhập địa chỉ mới: ");
@@ -135,12 +218,16 @@ public class OrderView {
         return phone;
     }
 
-    public void updateOrder() {
+    public void updateOrder(long userId) {
+        User user = userService.findById(userId);
         int option;
         boolean isTrue = true;
         do {
             try {
-                showOrder(orderService.findAll(), InputOption.UPDATE);
+                if (user.getRole() == Role.ADMIN)
+                    showOrder(orderService.findAll(), InputOption.UPDATE);
+                if (user.getRole() == Role.USER)
+                    showOrder(orderService.findOrderByUserId(userId), InputOption.UPDATE);
                 long id = inputId(InputOption.UPDATE);
                 Order order = orderService.findById(id);
                 menuUpdateOrder();
@@ -254,11 +341,14 @@ public class OrderView {
     private long inputId(InputOption option) {
         long id;
         switch (option) {
+            case SHOW:
+                System.out.println("Nhập Id đơn hàng: ");
+                break;
             case UPDATE:
-                System.out.println("Nhập Id hóa đơn bạn muốn chỉnh sửa: ");
+                System.out.println("Nhập Id đơn hàng bạn muốn chỉnh sửa: ");
                 break;
             case DELETE:
-                System.out.println("Nhập Id hóa đơn bạn muốn xóa: ");
+                System.out.println("Nhập Id đơn hàng bạn muốn xóa: ");
                 break;
         }
         boolean isTrue = true;
@@ -393,7 +483,7 @@ public class OrderView {
     private void findByUserId() {
         showOrder(orderService.findAll(), InputOption.FIND);
         System.out.println("░░░░░░ TÌM KIẾM THEO NHÂN VIÊN ░░░░░░");
-        System.out.print("Nhập id người tạo đơn: ");
+        System.out.print("Nhập id nhân viên: ");
         long value = Long.parseLong(scanner.nextLine());
         List<Order> ordersFind = orderService.findByUserId(value);
         if (ordersFind != null) {
@@ -414,7 +504,7 @@ public class OrderView {
         System.out.println("░░░░░░░ TÌM KIẾM THEO ĐỊA CHỈ ░░░░░░░");
         System.out.print("Nhập địa chỉ cần tìm: ");
         String value = scanner.nextLine();
-        List<Order> ordersFind = orderService.findByAddress(value);
+        List<Order> ordersFind = orderService.findByAddress(value, userId);
         if (ordersFind != null) {
             showOrder(ordersFind, InputOption.FIND);
         } else {
@@ -433,7 +523,7 @@ public class OrderView {
         System.out.println("░░░░░ TÌM KIẾM THEO SỐ ĐIỆN THOẠI ░░░░░");
         System.out.print("Nhập số điện thoại cần tìm: ");
         String value = scanner.nextLine();
-        List<Order> ordersFind = orderService.findByPhone(value);
+        List<Order> ordersFind = orderService.findByPhone(value, userId);
         if (ordersFind != null) {
             showOrder(ordersFind, InputOption.FIND);
         } else {
@@ -452,7 +542,7 @@ public class OrderView {
         System.out.println("░░░░░ TÌM KIẾM THEO KHÁCH HÀNG ░░░░░");
         System.out.print("Nhập tên khách hàng: ");
         String value = scanner.nextLine();
-        List<Order> ordersFind = orderService.findByFullName(value);
+        List<Order> ordersFind = orderService.findByFullName(value, userId);
         if (ordersFind != null) {
             showOrder(ordersFind, InputOption.FIND);
         } else {
@@ -493,7 +583,7 @@ public class OrderView {
         System.out.println("░   0. Thoát.                         ░");
         System.out.println("░                                     ░");
         System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
-        System.out.println("Enter your choice: ");
+        System.out.println("Nhập lựa chọn: ");
         System.out.print(" => ");
     }
 
@@ -508,7 +598,7 @@ public class OrderView {
         System.out.println("░   0. Thoát.                         ░");
         System.out.println("░                                     ░");
         System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
-        System.out.println("Enter your choice: ");
+        System.out.println("Nhập lựa chọn: ");
         System.out.print(" => ");
     }
 
