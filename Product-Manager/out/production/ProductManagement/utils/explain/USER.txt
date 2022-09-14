@@ -1,0 +1,12 @@
+I. TÀI KHOẢN
+    1.Tên người dùng bao gồm các ký tự chữ và số (a-zA-Z0-9), chữ thường hoặc chữ hoa.
+    2.Tên người dùng được phép có dấu chấm (.), Dấu gạch dưới (_) và dấu gạch ngang (-).
+    3.Dấu chấm (.), Dấu gạch dưới (_) hoặc dấu gạch ngang (-) không được là ký tự đầu tiên hoặc cuối cùng.
+    4.Dấu chấm (.), Dấu gạch dưới (_) hoặc dấu gạch ngang (-) không xuất hiện liên tiếp, ví dụ: java..regex
+    5.Số lượng ký tự phải từ 6 đến 20.
+
+II. MẬT KHẨU
+III. HỌ VÀ TÊN
+IV. SỐ ĐIỆN THOẠI
+V. EMAIL
+VI. ĐỊA CHỈ
