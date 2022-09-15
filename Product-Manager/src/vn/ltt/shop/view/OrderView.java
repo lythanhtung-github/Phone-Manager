@@ -28,18 +28,18 @@ public class OrderView {
         userService = UserService.getInstance();
     }
 
-    public void statistical() {
-        System.out.println("░░░░░░░░░░░░░░░ THỐNG KÊ ░░░░░░░░░░░░░░");
-        String date = inputDate();
+    public void statisticalByDay() {
+        System.out.println("░░░░░░░░░░░░░ THỐNG KÊ THEO NGÀY ░░░░░░░░░░░░");
+        String day = inputDay();
         List<Order> ordersFind = new ArrayList<>();
         List<Order> orders = orderService.findAll();
         for (Order order : orders) {
-            String createdDate = InstantUtils.instantToStringDate(order.getCreatedAt());
-            if (date.equals(createdDate)) {
+            String createdDate = InstantUtils.instantToStringDay(order.getCreatedAt());
+            if (day.equals(createdDate)) {
                 ordersFind.add(order);
             }
         }
-        System.out.printf("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ DOANH THU NGÀY %s ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n", date);
+        System.out.printf("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ DOANH THU NGÀY %s ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n", day);
         System.out.println("░                                                                                                     ░");
         System.out.println("░-----------------------------------------------------------------------------------------------------░");
         System.out.printf("░ %-2s%-5s | %-8s%-16s | %-5s%-9s | %-6s%-14s | %-5s%-17s ░\n",
@@ -50,10 +50,10 @@ public class OrderView {
                 "", "THÀNH TIỀN"
         );
         System.out.println("░-----------------------------------------------------------------------------------------------------░");
-        double totalRevenue = 0;
+        double revenueTotal = 0;
         for (int i = 0; i < ordersFind.size(); i++) {
             Order order = ordersFind.get(i);
-            totalRevenue += order.getGrandTotal();
+            revenueTotal += order.getGrandTotal();
             System.out.printf("░ %-3s%-4s | %-2s%-22s | %-2s%-12s | %-2s%-18s | %-2s%-20s ░\n",
                     "", i + 1,
                     "", order.getFullName(),
@@ -65,21 +65,127 @@ public class OrderView {
         System.out.println("░-----------------------------------------------------------------------------------------------------░");
         System.out.println("░                                                                                                     ░");
         System.out.println("░-----------------------------------------------------------------------------------------------------░");
-        System.out.printf("░                                                         TỔNG DOANH THU: %-20s%6s  ░\n", AppUtils.doubleToVND(totalRevenue), "");
+        System.out.printf("░                                                         TỔNG DOANH THU: %-20s%6s  ░\n", AppUtils.doubleToVND(revenueTotal), "");
         System.out.println("░-----------------------------------------------------------------------------------------------------░");
         System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
-        AppUtils.pressAnyKeyToContinue();
     }
 
-    private String inputDate() {
-        System.out.println("Nhập ngày (VD: 02-09-1945): ");
+    public void statisticalByMonth() {
+        System.out.println("░░░░░░░░░░░░░ THỐNG KÊ THEO THÁNG ░░░░░░░░░░░░");
+        String month = inputMonth();
+        List<Order> ordersFind = new ArrayList<>();
+        List<Order> orders = orderService.findAll();
+        for (Order order : orders) {
+            String createdDate = InstantUtils.instantToStringMonth(order.getCreatedAt());
+            if (month.equals(createdDate)) {
+                ordersFind.add(order);
+            }
+        }
+        System.out.printf("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ DOANH THU THÁNG %s ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n", month);
+        System.out.println("░                                                                                                     ░");
+        System.out.println("░-----------------------------------------------------------------------------------------------------░");
+        System.out.printf("░ %-2s%-5s | %-8s%-16s | %-5s%-9s | %-6s%-14s | %-5s%-17s ░\n",
+                "", "STT",
+                "", "KHÁCH HÀNG",
+                "", "SĐT",
+                "", "ĐỊA CHỈ",
+                "", "THÀNH TIỀN"
+        );
+        System.out.println("░-----------------------------------------------------------------------------------------------------░");
+        double revenueTotal = 0;
+        for (int i = 0; i < ordersFind.size(); i++) {
+            Order order = ordersFind.get(i);
+            revenueTotal += order.getGrandTotal();
+            System.out.printf("░ %-3s%-4s | %-2s%-22s | %-2s%-12s | %-2s%-18s | %-2s%-20s ░\n",
+                    "", i + 1,
+                    "", order.getFullName(),
+                    "", order.getPhone(),
+                    "", order.getAddress(),
+                    "", AppUtils.doubleToVND(order.getGrandTotal())
+            );
+        }
+        System.out.println("░-----------------------------------------------------------------------------------------------------░");
+        System.out.println("░                                                                                                     ░");
+        System.out.println("░-----------------------------------------------------------------------------------------------------░");
+        System.out.printf("░                                                         TỔNG DOANH THU: %-20s%6s  ░\n", AppUtils.doubleToVND(revenueTotal), "");
+        System.out.println("░-----------------------------------------------------------------------------------------------------░");
+        System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
+    }
+
+    public void statisticalByYear() {
+        System.out.println("░░░░░░░░░░░░░ THỐNG KÊ THEO NĂM ░░░░░░░░░░░░");
+        String year = inputYear();
+        List<Order> ordersFind = new ArrayList<>();
+        List<Order> orders = orderService.findAll();
+        for (Order order : orders) {
+            String createdDate = InstantUtils.instantToStringYear(order.getCreatedAt());
+            if (year.equals(createdDate)) {
+                ordersFind.add(order);
+            }
+        }
+        System.out.printf("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ DOANH THU NĂM %s ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n", year);
+        System.out.println("░                                                                                                     ░");
+        System.out.println("░-----------------------------------------------------------------------------------------------------░");
+        System.out.printf("░ %-2s%-5s | %-8s%-16s | %-5s%-9s | %-6s%-14s | %-5s%-17s ░\n",
+                "", "STT",
+                "", "KHÁCH HÀNG",
+                "", "SĐT",
+                "", "ĐỊA CHỈ",
+                "", "THÀNH TIỀN"
+        );
+        System.out.println("░-----------------------------------------------------------------------------------------------------░");
+        double revenueTotal = 0;
+        for (int i = 0; i < ordersFind.size(); i++) {
+            Order order = ordersFind.get(i);
+            revenueTotal += order.getGrandTotal();
+            System.out.printf("░ %-3s%-4s | %-2s%-22s | %-2s%-12s | %-2s%-18s | %-2s%-20s ░\n",
+                    "", i + 1,
+                    "", order.getFullName(),
+                    "", order.getPhone(),
+                    "", order.getAddress(),
+                    "", AppUtils.doubleToVND(order.getGrandTotal())
+            );
+        }
+        System.out.println("░-----------------------------------------------------------------------------------------------------░");
+        System.out.println("░                                                                                                     ░");
+        System.out.println("░-----------------------------------------------------------------------------------------------------░");
+        System.out.printf("░                                                         TỔNG DOANH THU: %-20s%6s  ░\n", AppUtils.doubleToVND(revenueTotal), "");
+        System.out.println("░-----------------------------------------------------------------------------------------------------░");
+        System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
+    }
+
+
+    private String inputDay() {
+        System.out.println("Nhập ngày (VD: 02-09-2022): ");
         System.out.print(" => ");
         String date;
-        while (!ValidateUtils.isDateValid(date = scanner.nextLine().trim())) {
-            System.out.println("Ngày, tháng, năm được phân tách bởi dấu '-' (VD: VD: 02-09-1945)");
+        while (!ValidateUtils.isDayValid(date = scanner.nextLine().trim())) {
+            System.out.println("Ngày, tháng, năm được phân tách bởi dấu '-' (VD: VD: 02-09-2022)");
             System.out.print(" => ");
         }
         return date;
+    }
+
+    private String inputMonth() {
+        System.out.println("Nhập tháng (VD: 09-2022): ");
+        System.out.print(" => ");
+        String month;
+        while (!ValidateUtils.isMonthValid(month = scanner.nextLine().trim())) {
+            System.out.println("Tháng, năm được phân tách bởi dấu '-' (VD: 09-2022).");
+            System.out.print(" => ");
+        }
+        return month;
+    }
+
+    private String inputYear() {
+        System.out.println("Nhập năm (VD: 2022): ");
+        System.out.print(" => ");
+        String year;
+        while (!ValidateUtils.isYearValid(year = scanner.nextLine().trim())) {
+            System.out.println("Năm gồm 4 chữ số (VD: 2022).");
+            System.out.print(" => ");
+        }
+        return year;
     }
 
     public void showOrder(List<Order> orders, InputOption option) {
@@ -342,13 +448,13 @@ public class OrderView {
         long id;
         switch (option) {
             case SHOW:
-                System.out.println("Nhập Id đơn hàng: ");
+                System.out.println("Nhập ID đơn hàng: ");
                 break;
             case UPDATE:
-                System.out.println("Nhập Id đơn hàng bạn muốn chỉnh sửa: ");
+                System.out.println("Nhập ID đơn hàng bạn muốn chỉnh sửa: ");
                 break;
             case DELETE:
-                System.out.println("Nhập Id đơn hàng bạn muốn xóa: ");
+                System.out.println("Nhập ID đơn hàng bạn muốn xóa: ");
                 break;
         }
         boolean isTrue = true;
@@ -439,7 +545,7 @@ public class OrderView {
             } catch (Exception e) {
                 System.out.println("Sai cú pháp. Vui lòng nhập lại!");
             }
-        } while (isTrue == AppUtils.isRetry(InputOption.FIND));
+        } while (isTrue);
     }
 
     public void memberFindOrder(long userId) {
@@ -491,6 +597,7 @@ public class OrderView {
         } else {
             System.out.println("Không tìm thấy!");
         }
+        AppUtils.pressAnyKeyToContinue();
     }
 
     private void findByAddress(long userId) {
@@ -510,6 +617,7 @@ public class OrderView {
         } else {
             System.out.println("Không tìm thấy!");
         }
+        AppUtils.pressAnyKeyToContinue();
     }
 
     private void findByPhone(long userId) {
@@ -529,6 +637,7 @@ public class OrderView {
         } else {
             System.out.println("Không tìm thấy");
         }
+        AppUtils.pressAnyKeyToContinue();
     }
 
     private void findByFullName(long userId) {
@@ -548,6 +657,7 @@ public class OrderView {
         } else {
             System.out.println("Không tìm thấy!");
         }
+        AppUtils.pressAnyKeyToContinue();
     }
 
     private void findByOrderId(long userId) {
@@ -569,6 +679,7 @@ public class OrderView {
         } else {
             System.out.println("Không tìm thấy!");
         }
+        AppUtils.pressAnyKeyToContinue();
     }
 
     private static void menuFindOrder() {

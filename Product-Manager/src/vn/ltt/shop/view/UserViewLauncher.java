@@ -36,7 +36,7 @@ public class UserViewLauncher {
                         userView.deleteUser();
                         break;
                     case FIND:
-                        userView.FindUser();
+                        userView.findUser();
                         break;
                     case SORT:
                         userView.sortUser();

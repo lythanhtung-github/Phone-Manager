@@ -136,11 +136,16 @@ public class UserView {
                     option = Integer.parseInt(scanner.nextLine());
                     switch (option) {
                         case 1:
-                            System.out.println("Xóa tài khoản " + user.getUserName() + " thành công!");
-                            userService.deleteById(id);
+                            if (user.getRole() == Role.ADMIN) {
+                                System.out.println("Không thể xóa tài khoản Admin!");
+                            } else {
+                                System.out.println("Xóa tài khoản " + user.getUserName() + " thành công!");
+                                userService.deleteById(id);
+                            }
                             AppUtils.pressAnyKeyToContinue();
                             isTrue = false;
                             break;
+
                         case 2:
                             isTrue = false;
                             break;
@@ -207,7 +212,7 @@ public class UserView {
         } while (isTrue);
     }
 
-    public void FindUser() {
+    public void findUser() {
         int option;
         boolean isTrue = true;
         do {

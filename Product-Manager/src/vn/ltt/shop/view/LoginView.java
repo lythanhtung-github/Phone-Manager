@@ -38,7 +38,7 @@ public class LoginView {
                             System.out.println("Tài khoản hoặc mật khẩu không đúng!");
                             AppUtils.pressAnyKeyToContinue();
                         } else {
-                            System.out.println("\n    ===> ĐĂNG NHẬP THÀNH CÔNG <===\n");
+                            System.out.println("\n    ===> ĐĂNG NHẬP THÀNH CÔNG <===");
                             System.out.printf("===> XIN CHÀO %s: %s <===\n\n", user.getRole(), user.getFullName().toUpperCase());
                             AppUtils.pressAnyKeyToContinue();
                             if (role == Role.ADMIN) {
@@ -76,7 +76,7 @@ public class LoginView {
                         break;
                 }
             } catch (Exception ex) {
-                System.out.println("Lựa chọn sai. Vui lòng nhập lại!");
+                System.out.println("Sai cú pháp. Vui lòng nhập lại!");
             }
         } while (option != 3);
     }

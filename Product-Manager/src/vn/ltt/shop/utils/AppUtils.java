@@ -51,7 +51,7 @@ public class AppUtils {
 
     public static void pressAnyKeyToContinue() {
         System.out.print("Ấn nút bất kỳ để tiếp tục. ");
-        String s = scanner.nextLine();
+        scanner.nextLine();
     }
 
     public static boolean isRetry(InputOption inputOption) {
@@ -74,6 +74,7 @@ public class AppUtils {
                     break;
                 case STATISTICAL:
                     System.out.println("===> Chọn 'y' để tiếp tục xem \t|\t 'q' để quay lại\t|\t 't' để thoát.");
+                    break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + inputOption);
             }

@@ -13,6 +13,10 @@ public class ValidateUtils {
     private static final String MANUFACTURER_PATTERN = "^[A-Z]+$";
     private static final String DATE_PATTERN = "^(0?[1-9]|[12][0-9]|3[01])[\\-](0?[1-9]|1[012])[\\-]\\d{4}$";
 
+    private static final String MONTH_PATTERN = "^(0?[1-9]|1[012])[\\-]\\d{4}$";
+
+    private static final String YEAR_PATTERN = "\\d{4}$";
+
     public static boolean isUsernameValid(String userName) {
         return Pattern.compile(USERNAME_PATTERN).matcher(userName).matches();
     }
@@ -45,7 +49,15 @@ public class ValidateUtils {
         return Pattern.compile(MANUFACTURER_PATTERN).matcher(manufacturer).matches();
     }
 
-    public static boolean isDateValid(String date) {
-        return Pattern.compile(DATE_PATTERN).matcher(date).matches();
+    public static boolean isDayValid(String day) {
+        return Pattern.compile(DATE_PATTERN).matcher(day).matches();
+    }
+
+    public static boolean isMonthValid(String month) {
+        return Pattern.compile(MONTH_PATTERN).matcher(month).matches();
+    }
+
+    public static boolean isYearValid(String year) {
+        return Pattern.compile(YEAR_PATTERN).matcher(year).matches();
     }
 }

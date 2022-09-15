@@ -33,7 +33,6 @@ public class OrderItemView {
                 "", "SẢN PHẨM",
                 "", "GIÁ",
                 "", "SỐ LƯỢNG",
-
                 "", "THÀNH TIỀN"
         );
         System.out.println("----------------------------------------------------------------------------------------------------------------");
@@ -171,7 +170,7 @@ public class OrderItemView {
                 System.out.println("Số lượng sản phẩm không thể âm, vui lòng nhập lại!");
             }
             if (quantity > product.getQuantity()) {
-                System.out.printf("Số lượng %s vượt quá %s sản phẩm hiện có! Vui lòng nhập lại!\n", product.getName(), product.getQuantity());
+                System.out.printf("Số lượng '%s' vượt quá '%s' sản phẩm hiện có! Vui lòng nhập lại!\n", product.getName(), product.getQuantity());
             }
 
         } while (quantity < 0 || quantity > product.getQuantity());
@@ -182,13 +181,13 @@ public class OrderItemView {
         long id;
         switch (option) {
             case ADD:
-                System.out.println("Nhập id : ");
+                System.out.println("Nhập ID : ");
                 break;
             case UPDATE:
-                System.out.println("Nhập id muốn chỉnh sửa: ");
+                System.out.println("Nhập ID muốn chỉnh sửa: ");
                 break;
             case DELETE:
-                System.out.println("Nhập Id muốn xóa: ");
+                System.out.println("Nhập ID muốn xóa: ");
                 break;
         }
         boolean isTrue = true;
@@ -207,13 +206,13 @@ public class OrderItemView {
     private long inputProductId(InputOption option) {
         switch (option) {
             case ADD:
-                System.out.println("Nhập id sản phẩm: ");
+                System.out.println("Nhập ID sản phẩm: ");
                 break;
             case UPDATE:
-                System.out.println("Nhập id sản phẩm muốn chỉnh sửa: ");
+                System.out.println("Nhập ID sản phẩm muốn chỉnh sửa: ");
                 break;
             case DELETE:
-                System.out.println("Nhập Id sản phẩm muốn xóa: ");
+                System.out.println("Nhập ID sản phẩm muốn xóa: ");
                 break;
         }
         long id;

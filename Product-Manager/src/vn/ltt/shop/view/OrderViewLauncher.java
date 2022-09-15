@@ -61,7 +61,7 @@ public class OrderViewLauncher {
                         break;
                 }
             } catch (Exception ex) {
-                System.out.println("Sai cứ pháp. Vui lòng nhập lại!");
+                System.out.println("Sai cú pháp. Vui lòng nhập lại!");
                 System.out.print(" => ");
             }
         } while (isTrue);
@@ -109,7 +109,7 @@ public class OrderViewLauncher {
                         break;
                 }
             } catch (Exception ex) {
-                System.out.println("Sai cứ pháp. Vui lòng nhập lại!");
+                System.out.println("Sai cú pháp. Vui lòng nhập lại!");
                 System.out.print(" => ");
             }
         } while (isTrue);
@@ -148,8 +148,52 @@ public class OrderViewLauncher {
         System.out.print("=> ");
     }
 
+    public static void menuStatisticalManager() {
+        System.out.println("░░░░░░░░░░░░░░░ THỐNG KÊ ░░░░░░░░░░░░░░");
+        System.out.println("░                                     ░");
+        System.out.println("░       1. Thống kê theo ngày.        ░");
+        System.out.println("░       2. Thống kê theo tháng.       ░");
+        System.out.println("░       3. Thống kê theo năm.         ░");
+        System.out.println("░       7. Trở lại.                   ░");
+        System.out.println("░       0. Thoát.                     ░");
+        System.out.println("░                                     ░");
+        System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
+        System.out.println("Nhập lựa chọn: ");
+        System.out.print("=> ");
+    }
+
 
     public static void statistical(){
-        orderView.statistical();
+        boolean isTrue = true;
+        do {
+           menuStatisticalManager();
+            try {
+                int option = Integer.parseInt(scanner.nextLine());
+                switch (option) {
+                    case 1:
+                        orderView.statisticalByDay();
+                        break;
+                    case 2:
+                        orderView.statisticalByMonth();
+                        break;
+                    case 3:
+                        orderView.statisticalByYear();
+                        break;
+                    case RETURN:
+                       return;
+                    case EXIT:
+                        System.out.println("Exit the program...");
+                        System.exit(0);
+                        break;
+                    default:
+                        System.out.println("Lựa chọn sai. Vui lòng nhập lại!");
+                        System.out.print(" => ");
+                        break;
+                }
+            } catch (Exception ex) {
+                System.out.println("Sai cú pháp. Vui lòng nhập lại!");
+                System.out.print(" => ");
+            }
+        } while (AppUtils.isRetry(InputOption.STATISTICAL));
     }
 }
