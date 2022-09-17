@@ -2,6 +2,7 @@ package vn.ltt.shop.utils;
 
 import vn.ltt.shop.view.InputOption;
 
+import java.security.SecureRandom;
 import java.text.DecimalFormat;
 import java.util.Scanner;
 
@@ -44,7 +45,7 @@ public class AppUtils {
     }
 
     public static String doubleToVND(double value) {
-        String patternVND = ",### vn₫";
+        String patternVND = ",### VNĐ";
         DecimalFormat decimalFormat = new DecimalFormat(patternVND);
         return decimalFormat.format(value);
     }
@@ -109,5 +110,34 @@ public class AppUtils {
                 System.out.println("Sai cú pháp, vui lòng nhập lại!");
             }
         } while (true);
+    }
+
+    static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    static SecureRandom rnd = new SecureRandom();
+
+    public static String randomString(int len){
+        StringBuilder sb = new StringBuilder(len);
+        for(int i = 0; i < len; i++)
+            sb.append(AB.charAt(rnd.nextInt(AB.length())));
+        return sb.toString();
+    }
+
+    public static void menuDelete() {
+        System.out.println("░░░░░ BẠN CÓ MUỐN XÓA KHÔNG? ░░░░░");
+        System.out.println("░            1. Có.              ░");
+        System.out.println("░            2. Không.           ░");
+        System.out.println("░            0. Thoát.           ░");
+        System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
+        System.out.println("Nhập lựa chọn: ");
+        System.out.print(" => ");
+    }
+
+    public static void menuSort() {
+        System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
+        System.out.println("░        1. Tăng dần.         ░");
+        System.out.println("░        2. Giảm dần.         ░");
+        System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
+        System.out.println("Enter your choice: ");
+        System.out.print(" => ");
     }
 }

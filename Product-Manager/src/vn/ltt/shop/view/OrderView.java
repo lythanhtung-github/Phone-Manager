@@ -19,8 +19,8 @@ public class OrderView {
     private final IOrderItemService orderItemService;
     private final IUserService userService;
     private static final Scanner scanner = new Scanner(System.in);
-    UserView userView = new UserView();
-    OrderItemView orderItemView = new OrderItemView();
+    private final UserView userView = new UserView();
+    private final OrderItemView orderItemView = new OrderItemView();
 
     public OrderView() {
         orderService = OrderService.getInstance();
@@ -158,12 +158,12 @@ public class OrderView {
     private String inputDay() {
         System.out.println("Nhập ngày (VD: 02-09-2022): ");
         System.out.print(" => ");
-        String date;
-        while (!ValidateUtils.isDayValid(date = scanner.nextLine().trim())) {
+        String day;
+        while (!ValidateUtils.isDayValid(day = scanner.nextLine().trim())) {
             System.out.println("Ngày, tháng, năm được phân tách bởi dấu '-' (VD: VD: 02-09-2022)");
             System.out.print(" => ");
         }
-        return date;
+        return day;
     }
 
     private String inputMonth() {
@@ -479,7 +479,7 @@ public class OrderView {
             boolean isTrue = true;
             do {
                 try {
-                    menuDeleteOrder();
+                    AppUtils.menuDelete();
                     option = Integer.parseInt(scanner.nextLine());
                     switch (option) {
                         case 1:
@@ -713,16 +713,6 @@ public class OrderView {
         System.out.print(" => ");
     }
 
-    private static void menuDeleteOrder() {
-        System.out.println("░░░░░ BẠN CÓ MUỐN XÓA KHÔNG? ░░░░░");
-        System.out.println("░            1. Có.              ░");
-        System.out.println("░            2. Không.           ░");
-        System.out.println("░            0. Thoát.           ░");
-        System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
-        System.out.println("Nhập lựa chọn: ");
-        System.out.print(" => ");
-    }
-
     private void menuUpdateOrder() {
         System.out.println("░░░░░░░░ CHỈNH SỬA ĐƠN HÀNG ░░░░░░░░");
         System.out.println("░                                  ░");
@@ -832,7 +822,7 @@ public class OrderView {
     private void sortByCreateTime(long userId) {
         System.out.println("░░░░░ SẮP XẾP THEO THỜI GIAN TẠO ĐƠN HÀNG ░░░░░");
         User user = userService.findById(userId);
-        menuSortASCOrDESC();
+        AppUtils.menuSort();
         int option;
         try {
             option = Integer.parseInt(scanner.nextLine());
@@ -861,7 +851,7 @@ public class OrderView {
 
     private void sortByUserId() {
         System.out.println("░░░░░░ SẮP XẾP THEO NHÂN VIÊN ░░░░░░");
-        menuSortASCOrDESC();
+        AppUtils.menuSort();
         int option;
         try {
             option = Integer.parseInt(scanner.nextLine());
@@ -885,7 +875,7 @@ public class OrderView {
     private void sortByGrandTotal(long userId) {
         System.out.println("░░░░░░░░ SẮP XẾP THEO TỔNG TIỀN ░░░░░░░░");
         User user = userService.findById(userId);
-        menuSortASCOrDESC();
+        AppUtils.menuSort();
         int option;
         try {
             option = Integer.parseInt(scanner.nextLine());
@@ -915,7 +905,7 @@ public class OrderView {
     private void sortByAddress(long userId) {
         System.out.println("░░░░░░░ SẮP XẾP THEO ĐỊA CHỈ ░░░░░░░");
         User user = userService.findById(userId);
-        menuSortASCOrDESC();
+        AppUtils.menuSort();
         int option;
         try {
             option = Integer.parseInt(scanner.nextLine());
@@ -946,7 +936,7 @@ public class OrderView {
     private void sortByPhone(long userId) {
         System.out.println("░░░░░░ SẮP XẾP THEO SỐ ĐIỆN THOẠI ░░░░░░");
         User user = userService.findById(userId);
-        menuSortASCOrDESC();
+        AppUtils.menuSort();
         int option;
         try {
             option = Integer.parseInt(scanner.nextLine());
@@ -976,7 +966,7 @@ public class OrderView {
     private void sortByFullName(long userId) {
         System.out.println("░░░░░░░░ SẮP XẾP THEO TÊN KHÁCH HÀNG ░░░░░░░░");
         User user = userService.findById(userId);
-        menuSortASCOrDESC();
+        AppUtils.menuSort();
         int option;
         try {
             option = Integer.parseInt(scanner.nextLine());
@@ -1006,7 +996,7 @@ public class OrderView {
     private void sortById(long userId) {
         System.out.println("░░░░░░░░░░ SẮP XẾP THEO ID ░░░░░░░░░░");
         User user = userService.findById(userId);
-        menuSortASCOrDESC();
+        AppUtils.menuSort();
         int option;
         try {
             option = Integer.parseInt(scanner.nextLine());
@@ -1033,19 +1023,10 @@ public class OrderView {
         }
     }
 
-    private static void menuSortASCOrDESC() {
-        System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
-        System.out.println("░         1. Tăng dần.        ░");
-        System.out.println("░         2. Giảm dần.        ░");
-        System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
-        System.out.println("Nhập lựa chọn: ");
-        System.out.print(" => ");
-    }
-
     private void menuSortOrder() {
         System.out.println("░░░░░░░░░░░ SẮP XẾP HÓA ĐƠN ░░░░░░░░░░");
         System.out.println("░                                    ░");
-        System.out.println("░    1. Sắp xếp theo Id.             ░");
+        System.out.println("░    1. Sắp xếp theo ID.             ░");
         System.out.println("░    2. Sắp xếp theo khách hàng.     ░");
         System.out.println("░    3. Sắp xếp theo số điện thoại.  ░");
         System.out.println("░    4. Sắp xếp theo địa chỉ.        ░");
@@ -1063,7 +1044,7 @@ public class OrderView {
     private void menuMemberSortOrder() {
         System.out.println("░░░░░░░░░░░ SẮP XẾP HÓA ĐƠN ░░░░░░░░░░");
         System.out.println("░                                    ░");
-        System.out.println("░    1. Sắp xếp theo Id.             ░");
+        System.out.println("░    1. Sắp xếp theo ID.             ░");
         System.out.println("░    2. Sắp xếp theo khách hàng.     ░");
         System.out.println("░    3. Sắp xếp theo số điện thoại.  ░");
         System.out.println("░    4. Sắp xếp theo địa chỉ.        ░");
@@ -1088,6 +1069,7 @@ public class OrderView {
                 case "q":
                     return false;
                 case "h":
+                    System.out.println("Hủy đơn hàng thành công!");
                     returnProductQuantityAfterDeleteOrder(orderId);
                     return false;
                 case "t":
@@ -1117,5 +1099,56 @@ public class OrderView {
 
     public List<Order> findAllByUserId(long userId) {
         return orderService.findOrderByUserId(userId);
+    }
+
+    private long inputIdDeleted() {
+        long id;
+        System.out.print("Nhập ID hóa đơn cần khôi phục: ");
+        boolean isTrue = true;
+        do {
+            id = AppUtils.retryParseLong();
+            boolean isFindId = orderService.existByIdDeleted(id);
+            if (isFindId) {
+                isTrue = false;
+            } else {
+                System.out.println("Không tìm thấy, vui lòng nhập lại!");
+            }
+        } while (isTrue);
+        return id;
+    }
+
+    public void restoreOrder() {
+        List<Order> ordersDelete = orderService.findAllDelete();
+        if (ordersDelete != null) {
+            showOrder(ordersDelete, InputOption.DELETE);
+            boolean isTrue = true;
+            do {
+                System.out.println("Chọn 'y' để chọn đơn hàng cần khôi phục \t|\t 'q' để trở lại.");
+                System.out.print(" => ");
+                String option = scanner.nextLine();
+                switch (option) {
+                    case "y":
+                        long id = inputIdDeleted();
+                        Order orderDeleted = orderService.findByIdDeleted(id);
+                        orderItemView.restoreOrderItem(id);
+                        orderService.add(orderDeleted);
+                        orderService.deleteInFileDeleted(id);
+                        System.out.printf("Khôi phục đơn hàng '%s' của khách hàng %s thành công!\n", id, orderDeleted.getFullName());
+                        AppUtils.pressAnyKeyToContinue();
+                        showOrder(orderService.findAllDelete(), InputOption.DELETE);
+                        break;
+                    case "q":
+                        isTrue = false;
+                        break;
+                    default:
+                        System.out.println("Lựa chọn sai. Vui lòng nhập lại!");
+                        System.out.print(" => ");
+                        break;
+                }
+            } while (isTrue);
+        } else {
+            System.out.println("Không có đơn hàng cần khôi phục!");
+            AppUtils.pressAnyKeyToContinue();
+        }
     }
 }

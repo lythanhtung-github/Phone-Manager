@@ -48,9 +48,9 @@ public class User {
         this.role = role;
     }
 
-    public static User parseUser(String raw) {
+    public static User parseUser(String line) {
         User user = new User();
-        String[] fields = raw.split(",");
+        String[] fields = line.split(",");
         user.id = Long.parseLong(fields[0]);
         user.userName = fields[1];
         user.passWord = fields[2];

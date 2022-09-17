@@ -23,9 +23,9 @@ public class ProductService implements IProductService {
     @Override
     public List<Product> findAll() {
         List<Product> products = new ArrayList<>();
-        List<String> records = CSVUtils.read(DATA_PRODUCT_PATH);
-        for (String record : records) {
-            products.add(Product.parse(record));
+        List<String> lines = CSVUtils.read(DATA_PRODUCT_PATH);
+        for (String line : lines) {
+            products.add(Product.parse(line));
         }
         return products;
     }
@@ -107,6 +107,7 @@ public class ProductService implements IProductService {
                 return result > 0 ? -1 : 1;
             });
         }
+        CSVUtils.write(DATA_PRODUCT_PATH, products);
         return products;
     }
 
@@ -127,6 +128,7 @@ public class ProductService implements IProductService {
                 return result > 0 ? -1 : 1;
             });
         }
+        CSVUtils.write(DATA_PRODUCT_PATH, products);
         return products;
     }
 
@@ -147,6 +149,7 @@ public class ProductService implements IProductService {
                 return result > 0 ? -1 : 1;
             });
         }
+        CSVUtils.write(DATA_PRODUCT_PATH, products);
         return products;
     }
 
@@ -167,6 +170,7 @@ public class ProductService implements IProductService {
                 return result > 0 ? -1 : 1;
             });
         }
+        CSVUtils.write(DATA_PRODUCT_PATH, products);
         return products;
     }
 
@@ -187,6 +191,7 @@ public class ProductService implements IProductService {
                 return result > 0 ? -1 : 1;
             });
         }
+        CSVUtils.write(DATA_PRODUCT_PATH, products);
         return products;
     }
 
@@ -207,6 +212,7 @@ public class ProductService implements IProductService {
                 return result > 0 ? -1 : 1;
             });
         }
+        CSVUtils.write(DATA_PRODUCT_PATH, products);
         return products;
     }
 

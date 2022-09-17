@@ -17,7 +17,7 @@ public class ProductViewLauncher {
     private static final int RETURN_MEMBER = 4;
     private static final int FIND_MEMBER = 2;
     private static final int SORT_MEMBER = 3;
-    static ProductView productView = new ProductView();
+    private static final ProductView productView = new ProductView();
 
     public static void launch() {
         boolean isTrue = true;

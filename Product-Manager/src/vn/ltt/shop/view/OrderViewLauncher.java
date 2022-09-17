@@ -14,10 +14,16 @@ public class OrderViewLauncher {
     private static final int DELETE = 4;
     private static final int FIND = 5;
     private static final int SORT = 6;
-    private static final int RETURN = 7;
+    private static final int RETURN = 8;
     private static final int EXIT = 0;
     private static final Scanner scanner = new Scanner(System.in);
-    static OrderView orderView = new OrderView();
+    private static final int FIND_ORDER = 4;
+    private static final int SORT_ORDER = 5;
+    private static final int STATISTICAL_BY_DAY = 1;
+    private static final int STATISTICAL_BY_MONTH = 2;
+    private static final int STATISTICAL_BY_YEAR = 3;
+    private static final int RESTORE = 7;
+    private static final OrderView orderView = new OrderView();
 
 
     public OrderViewLauncher() {
@@ -47,6 +53,9 @@ public class OrderViewLauncher {
                         break;
                     case SORT:
                         orderView.sortOrder(userId);
+                        break;
+                    case RESTORE:
+                        orderView.restoreOrder();
                         break;
                     case RETURN:
                         isTrue = false;
@@ -90,10 +99,10 @@ public class OrderViewLauncher {
                     case UPDATE:
                         orderView.updateOrder(userId);
                         break;
-                    case 4:
+                    case FIND_ORDER:
                         orderView.memberFindOrder(userId);
                         break;
-                    case 5:
+                    case SORT_ORDER:
                         orderView.memberSortOrder(userId);
                         break;
                     case RETURN:
@@ -124,7 +133,8 @@ public class OrderViewLauncher {
         System.out.println("░       4. Xóa đơn hàng.                ░");
         System.out.println("░       5. Tìm kiếm đơn hàng.           ░");
         System.out.println("░       6. Sắp xếp đơn hàng.            ░");
-        System.out.println("░       7. Trở lại.                     ░");
+        System.out.println("░       7. Khôi phục đơn hàng.          ░");
+        System.out.println("░       8. Trở lại.                     ░");
         System.out.println("░       0. Thoát.                       ░");
         System.out.println("░                                       ░");
         System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
@@ -140,7 +150,7 @@ public class OrderViewLauncher {
         System.out.println("░       3. Chỉnh sửa đơn hàng.          ░");
         System.out.println("░       4. Tìm kiếm đơn hàng.           ░");
         System.out.println("░       5. Sắp xếp đơn hàng.            ░");
-        System.out.println("░       7. Trở lại.                     ░");
+        System.out.println("░       8. Trở lại.                     ░");
         System.out.println("░       0. Thoát.                       ░");
         System.out.println("░                                       ░");
         System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
@@ -154,7 +164,7 @@ public class OrderViewLauncher {
         System.out.println("░       1. Thống kê theo ngày.        ░");
         System.out.println("░       2. Thống kê theo tháng.       ░");
         System.out.println("░       3. Thống kê theo năm.         ░");
-        System.out.println("░       7. Trở lại.                   ░");
+        System.out.println("░       8. Trở lại.                   ░");
         System.out.println("░       0. Thoát.                     ░");
         System.out.println("░                                     ░");
         System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
@@ -163,24 +173,23 @@ public class OrderViewLauncher {
     }
 
 
-    public static void statistical(){
-        boolean isTrue = true;
+    public static void statistical() {
         do {
-           menuStatisticalManager();
+            menuStatisticalManager();
             try {
                 int option = Integer.parseInt(scanner.nextLine());
                 switch (option) {
-                    case 1:
+                    case STATISTICAL_BY_DAY:
                         orderView.statisticalByDay();
                         break;
-                    case 2:
+                    case STATISTICAL_BY_MONTH:
                         orderView.statisticalByMonth();
                         break;
-                    case 3:
+                    case STATISTICAL_BY_YEAR:
                         orderView.statisticalByYear();
                         break;
                     case RETURN:
-                       return;
+                        break;
                     case EXIT:
                         System.out.println("Exit the program...");
                         System.exit(0);

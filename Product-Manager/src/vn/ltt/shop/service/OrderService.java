@@ -10,6 +10,7 @@ import java.util.List;
 
 public class OrderService implements IOrderService {
     public final static String DATA_ORDER_PATH = "data/orders.csv";
+    public final static String DATA_ORDER_DELETE_PATH = "data/data_delete/orders_delete.csv";
     private static OrderService instance;
 
     private OrderService() {
@@ -24,6 +25,16 @@ public class OrderService implements IOrderService {
     public List<Order> findAll() {
         List<Order> orders = new ArrayList<>();
         List<String> lines = CSVUtils.read(DATA_ORDER_PATH);
+        for (String line : lines) {
+            orders.add(Order.parseOrder(line));
+        }
+        return orders;
+    }
+
+    @Override
+    public List<Order> findAllDelete() {
+        List<Order> orders = new ArrayList<>();
+        List<String> lines = CSVUtils.read(DATA_ORDER_DELETE_PATH);
         for (String line : lines) {
             orders.add(Order.parseOrder(line));
         }
@@ -58,17 +69,41 @@ public class OrderService implements IOrderService {
     @Override
     public void delete(long id) {
         List<Order> orders = findAll();
+        List<Order> ordersDelete = findAllDelete();
+        for (int i = 0; i < orders.size(); i++) {
+            if ((orders.get(i)).getId() == id) {
+                ordersDelete.add(orders.get(i));
+                orders.remove(orders.get(i));
+            }
+        }
+        CSVUtils.write(DATA_ORDER_DELETE_PATH,ordersDelete);
+        CSVUtils.write(DATA_ORDER_PATH, orders);
+    }
+
+    @Override
+    public void deleteInFileDeleted(long id) {
+        List<Order> orders = findAllDelete();
         for (int i = 0; i < orders.size(); i++) {
             if ((orders.get(i)).getId() == id) {
                 orders.remove(orders.get(i));
             }
         }
-        CSVUtils.write(DATA_ORDER_PATH, orders);
+        CSVUtils.write(DATA_ORDER_DELETE_PATH, orders);
     }
 
     @Override
     public Order findById(long id) {
         List<Order> orders = findAll();
+        for (Order order : orders) {
+            if (order.getId() == id)
+                return order;
+        }
+        return null;
+    }
+
+    @Override
+    public Order findByIdDeleted(long id) {
+        List<Order> orders = findAllDelete();
         for (Order order : orders) {
             if (order.getId() == id)
                 return order;
@@ -445,6 +480,11 @@ public class OrderService implements IOrderService {
     @Override
     public boolean existById(long id) {
         return findById(id) != null;
+    }
+
+    @Override
+    public boolean existByIdDeleted(long id) {
+        return findByIdDeleted(id) != null;
     }
 
     @Override

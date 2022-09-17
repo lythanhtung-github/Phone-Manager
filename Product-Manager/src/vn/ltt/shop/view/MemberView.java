@@ -11,8 +11,19 @@ public class MemberView {
 
     private static final Scanner scanner = new Scanner(System.in);
     private static final IUserService userService = UserService.getInstance();
-
     private static final UserView userView = new UserView();
+    private static final int EXIT_PROGRAM = 0;
+    private static final int SETTING_ACCOUNT = 1;
+    private static final int SHOW_INFO_ACCOUNT = 1;
+    private static final int CHANGE_PASSWORD = 2;
+    private static final int PRODUCT_MANAGER = 2;
+    private static final int ORDER_MANAGER = 3;
+    private static final int LOGOUT = 4;
+    private static final int CHANGE_FULL_NAME = 3;
+    private static final int CHANGE_EMAIL = 4;
+    private static final int CHANGE_PHONE = 5;
+    private static final int CHANGE_ADDRESS = 6;
+    private static final int RETURN = 7;
 
     public static void launch(long userId) {
         boolean isTrue = true;
@@ -21,19 +32,19 @@ public class MemberView {
                 menuMemberManager();
                 int choice = Integer.parseInt(scanner.nextLine());
                 switch (choice) {
-                    case 1:
+                    case SETTING_ACCOUNT:
                         settingAccount(userId);
                         break;
-                    case 2:
+                    case PRODUCT_MANAGER:
                         ProductViewLauncher.memberLaunch();
                         break;
-                    case 3:
+                    case ORDER_MANAGER:
                         OrderViewLauncher.memberLaunch(userId);
                         break;
-                    case 4:
+                    case LOGOUT:
                         isTrue = false;
                         break;
-                    case 0:
+                    case EXIT_PROGRAM:
                         System.out.println("Exit the program...");
                         System.exit(0);
                         break;
@@ -56,28 +67,28 @@ public class MemberView {
                 menuSettingAccount();
                 int choice = Integer.parseInt(scanner.nextLine());
                 switch (choice) {
-                    case 1:
+                    case SHOW_INFO_ACCOUNT:
                         showInfoAccount(user);
                         break;
-                    case 2:
+                    case CHANGE_PASSWORD:
                         changePassWord(user);
                         break;
-                    case 3:
+                    case CHANGE_FULL_NAME:
                         changeFullName(user);
                         break;
-                    case 4:
+                    case CHANGE_EMAIL:
                         changeEmail(user);
                         break;
-                    case 5:
+                    case CHANGE_PHONE:
                         changePhone(user);
                         break;
-                    case 6:
+                    case CHANGE_ADDRESS:
                         changeAddress(user);
                         break;
-                    case 7:
+                    case RETURN:
                         isTrue = false;
                         break;
-                    case 0:
+                    case EXIT_PROGRAM:
                         System.out.println("Exit the program...");
                         System.exit(0);
                         break;

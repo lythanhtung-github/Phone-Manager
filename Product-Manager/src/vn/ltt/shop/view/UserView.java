@@ -132,7 +132,7 @@ public class UserView {
             boolean isTrue = true;
             do {
                 try {
-                    menuDeleteUser();
+                    AppUtils.menuDelete();
                     option = Integer.parseInt(scanner.nextLine());
                     switch (option) {
                         case 1:
@@ -338,7 +338,7 @@ public class UserView {
 
     private void sortById() {
         System.out.println("░░░░░░░░ SẮP XẾP THEO ID ░░░░░░░░");
-        menuSortASCOrDESC();
+        AppUtils.menuSort();
         int option;
         try {
             option = Integer.parseInt(scanner.nextLine());
@@ -361,7 +361,7 @@ public class UserView {
 
     private void sortByUserName() {
         System.out.println("░░░░░░░░ SẮP XẾP THEO TÀI KHOẢN ░░░░░░░░");
-        menuSortASCOrDESC();
+        AppUtils.menuSort();
         int option;
         try {
             option = Integer.parseInt(scanner.nextLine());
@@ -384,7 +384,7 @@ public class UserView {
 
     private void sortByFullName() {
         System.out.println("░░░░░░░░ SẮP XẾP THEO TÊN NGƯỜI DÙNG ░░░░░░░░");
-        menuSortASCOrDESC();
+        AppUtils.menuSort();
         int option;
         try {
             option = Integer.parseInt(scanner.nextLine());
@@ -407,7 +407,7 @@ public class UserView {
 
     private void sortByEmail() {
         System.out.println("░░░░░░░░░░ SẮP XẾP THEO EMAIL ░░░░░░░░░░");
-        menuSortASCOrDESC();
+        AppUtils.menuSort();
         int option;
         try {
             option = Integer.parseInt(scanner.nextLine());
@@ -430,7 +430,7 @@ public class UserView {
 
     private void sortByPhone() {
         System.out.println("░░░░░░░░░░ SẮP XẾP THEO SĐT ░░░░░░░░░░");
-        menuSortASCOrDESC();
+        AppUtils.menuSort();
         int option;
         try {
             option = Integer.parseInt(scanner.nextLine());
@@ -453,7 +453,7 @@ public class UserView {
 
     private void sortByRole() {
         System.out.println("░░░░░░░░ SẮP XẾP THEO QUYỀN NGƯỜI DÙNG ░░░░░░░░");
-        menuSortASCOrDESC();
+        AppUtils.menuSort();
         int option;
         try {
             option = Integer.parseInt(scanner.nextLine());
@@ -476,7 +476,7 @@ public class UserView {
 
     private void sortByAddress() {
         System.out.println("░░░░░░░░░░ SẮP XẾP THEO ĐỊA CHỈ ░░░░░░░░░░");
-        menuSortASCOrDESC();
+        AppUtils.menuSort();
         int option;
         try {
             option = Integer.parseInt(scanner.nextLine());
@@ -763,25 +763,6 @@ public class UserView {
         System.out.print(" => ");
     }
 
-
-    private static void menuSortASCOrDESC() {
-        System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
-        System.out.println("░         1. Tăng dần.        ░");
-        System.out.println("░         2. Giảm dần.        ░");
-        System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
-        System.out.println("Nhập lựa chọn: ");
-        System.out.print(" => ");
-    }
-
-    private static void menuDeleteUser() {
-        System.out.println("░░░░░ BẠN CÓ MUỐN XÓA KHÔNG? ░░░░░");
-        System.out.println("░            1. Có.              ░");
-        System.out.println("░            2. Không.           ░");
-        System.out.println("░            0. Thoát.           ░");
-        System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
-        System.out.println("Nhập lựa chọn: ");
-        System.out.print(" => ");
-    }
 
     private static void menuSetRole() {
         System.out.println("░░░░░░░░░ CHỌN QUYỀN ░░░░░░░░░");

@@ -9,6 +9,7 @@ import java.util.List;
 
 public class OrderItemService implements IOrderItemService {
     public final static String DATA_ORDER_ITEM_PATH = "data/order_items.csv";
+    public final static String DATA_ORDER_ITEM_DELETE_PATH = "data/data_delete/order_items_delete.csv";
     private static OrderItemService instance;
 
     private OrderItemService() {
@@ -23,6 +24,16 @@ public class OrderItemService implements IOrderItemService {
     public List<OrderItem> findAll() {
         List<OrderItem> orderItems = new ArrayList<>();
         List<String> records = CSVUtils.read(DATA_ORDER_ITEM_PATH);
+        for (String record : records) {
+            orderItems.add(OrderItem.parseOrderItem(record));
+        }
+        return orderItems;
+    }
+
+    @Override
+    public List<OrderItem> findAllDelete() {
+        List<OrderItem> orderItems = new ArrayList<>();
+        List<String> records = CSVUtils.read(DATA_ORDER_ITEM_DELETE_PATH);
         for (String record : records) {
             orderItems.add(OrderItem.parseOrderItem(record));
         }
@@ -54,12 +65,26 @@ public class OrderItemService implements IOrderItemService {
     @Override
     public void deleteById(long id) {
         List<OrderItem> orderItems = findAll();
+        List<OrderItem> orderItemsDelete = findAllDelete();
         for (int i = 0; i < orderItems.size(); i++) {
             if ((orderItems.get(i)).getId() == id) {
+                orderItemsDelete.add(orderItems.get(i));
                 orderItems.remove(orderItems.get(i));
             }
         }
+        CSVUtils.write(DATA_ORDER_ITEM_DELETE_PATH, orderItemsDelete);
         CSVUtils.write(DATA_ORDER_ITEM_PATH, orderItems);
+    }
+
+    @Override
+    public void deleteByIdInFileDeleted(long id) {
+        List<OrderItem> orderItemsDelete = findAllDelete();
+        for (int i = 0; i < orderItemsDelete.size(); i++) {
+            if ((orderItemsDelete.get(i)).getId() == id) {
+                orderItemsDelete.remove(orderItemsDelete.get(i));
+            }
+        }
+        CSVUtils.write(DATA_ORDER_ITEM_DELETE_PATH, orderItemsDelete);
     }
 
     @Override
@@ -74,8 +99,34 @@ public class OrderItemService implements IOrderItemService {
     }
 
     @Override
+    public OrderItem findByIdDeleted(long id) {
+        List<OrderItem> orderItems = findAllDelete();
+        for (OrderItem orderItem : orderItems) {
+            if (orderItem.getId() == id) {
+                return orderItem;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public List<OrderItem> findByOrderId(long orderId) {
         List<OrderItem> orderItems = findAll();
+        List<OrderItem> orderItemsFind = new ArrayList<>();
+        for (OrderItem orderItem : orderItems) {
+            if (orderItem.getOrderId() == orderId) {
+                orderItemsFind.add(orderItem);
+            }
+        }
+        if (orderItemsFind.isEmpty()) {
+            return null;
+        }
+        return orderItemsFind;
+    }
+
+    @Override
+    public List<OrderItem> findByOrderIdDeleted(long orderId) {
+        List<OrderItem> orderItems = findAllDelete();
         List<OrderItem> orderItemsFind = new ArrayList<>();
         for (OrderItem orderItem : orderItems) {
             if (orderItem.getOrderId() == orderId) {
@@ -111,5 +162,10 @@ public class OrderItemService implements IOrderItemService {
     @Override
     public boolean existById(long id) {
         return findById(id) != null;
+    }
+
+    @Override
+    public boolean existByIdDeleted(long id) {
+        return findByIdDeleted(id) != null;
     }
 }

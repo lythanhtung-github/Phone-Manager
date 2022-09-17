@@ -258,7 +258,7 @@ public class ProductView {
             boolean isTrue = true;
             do {
                 try {
-                    menuDeleteProduct();
+                    AppUtils.menuDelete();
                     option = Integer.parseInt(scanner.nextLine());
                     switch (option) {
                         case 1:
@@ -408,7 +408,7 @@ public class ProductView {
 
     private void sortByCreateTime() {
         System.out.println("░░░░░░ SẮP XẾP THEO THỜI GIAN TẠO ░░░░░░");
-        menuSortASCOrDESC();
+        AppUtils.menuSort();
         int option;
         try {
             option = Integer.parseInt(scanner.nextLine());
@@ -431,7 +431,7 @@ public class ProductView {
 
     private void sortByManufacturer() {
         System.out.println("░░░░░░░ SẮP XẾP THEO NHÀ SẢN XUẤT ░░░░░░░");
-        menuSortASCOrDESC();
+        AppUtils.menuSort();
         int option;
         try {
             option = Integer.parseInt(scanner.nextLine());
@@ -454,7 +454,7 @@ public class ProductView {
 
     private void sortByQuantity() {
         System.out.println("░░░░░░░░ SẮP XẾP THEO SỐ LƯỢNG ░░░░░░░░");
-        menuSortASCOrDESC();
+        AppUtils.menuSort();
         int option;
         try {
             option = Integer.parseInt(scanner.nextLine());
@@ -477,7 +477,7 @@ public class ProductView {
 
     private void sortByPrice() {
         System.out.println("░░░░░░░░ SẮP XẾP THEO GIÁ ░░░░░░░░");
-        menuSortASCOrDESC();
+        AppUtils.menuSort();
         int option;
         try {
             option = Integer.parseInt(scanner.nextLine());
@@ -500,7 +500,7 @@ public class ProductView {
 
     private void sortByProductName() {
         System.out.println("░░░░░░ SẮP XẾP THEO TÊN SẢN PHẨM ░░░░░░");
-        menuSortASCOrDESC();
+        AppUtils.menuSort();
         int option;
         try {
             option = Integer.parseInt(scanner.nextLine());
@@ -523,7 +523,7 @@ public class ProductView {
 
     private void sortById() {
         System.out.println("░░░░░░░░░░ SẮP XẾP THEO ID ░░░░░░░░░░");
-        menuSortASCOrDESC();
+        AppUtils.menuSort();
         int option;
         try {
             option = Integer.parseInt(scanner.nextLine());
@@ -542,15 +542,6 @@ public class ProductView {
         } catch (Exception e) {
             System.out.println("Sai cú pháp. Vui lòng nhập lại!");
         }
-    }
-
-    private static void menuSortASCOrDESC() {
-        System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
-        System.out.println("░        1. Tăng dần.         ░");
-        System.out.println("░        2. Giảm dần.         ░");
-        System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
-        System.out.println("Enter your choice: ");
-        System.out.print(" => ");
     }
 
     private void menuSortProduct() {
@@ -580,16 +571,6 @@ public class ProductView {
         System.out.println("░    0. Thoát.                      ░");
         System.out.println("░                                   ░");
         System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
-        System.out.println("Nhập lựa chọn: ");
-        System.out.print(" => ");
-    }
-
-    private static void menuDeleteProduct() {
-        System.out.println("░░░░░ BẠN CÓ MUỐN XÓA KHÔNG? ░░░░░");
-        System.out.println("░            1. Có.              ░");
-        System.out.println("░            2. Không.           ░");
-        System.out.println("░            0. Thoát.           ░");
-        System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
         System.out.println("Nhập lựa chọn: ");
         System.out.print(" => ");
     }

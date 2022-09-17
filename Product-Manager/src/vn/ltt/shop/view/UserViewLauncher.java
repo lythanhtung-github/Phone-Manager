@@ -14,7 +14,7 @@ public class UserViewLauncher {
     private static final int RETURN = 7;
     private static final int EXIT = 0;
     private static final Scanner scanner = new Scanner(System.in);
-    static UserView userView = new UserView();
+    private static final UserView userView = new UserView();
 
     public static void launch() {
         boolean isTrue = true;

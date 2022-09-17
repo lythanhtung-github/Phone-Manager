@@ -8,13 +8,19 @@ import java.util.List;
 public interface IOrderService {
     List<Order> findAll();
 
+    List<Order> findAllDelete();
+
     void add(Order newOrder);
 
     void update(Order newOrder);
 
     void delete(long id);
 
+    void deleteInFileDeleted(long id);
+
     Order findById(long id);
+
+    Order findByIdDeleted(long id);
 
     List<Order> findByUserId(long id);
 
@@ -57,6 +63,8 @@ public interface IOrderService {
     List<Order> sortByGrandTotal(TypeSort type, long userId);
 
     boolean existById(long id);
+
+    boolean existByIdDeleted(long id);
 
     List<Order> findOrderByUserId(long userId);
 }

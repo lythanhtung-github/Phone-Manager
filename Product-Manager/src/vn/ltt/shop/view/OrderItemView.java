@@ -16,8 +16,7 @@ public class OrderItemView {
     private final IProductService productService;
     private final IOrderService orderService;
     private static final Scanner scanner = new Scanner(System.in);
-    ProductView productView = new ProductView();
-
+    private final ProductView productView = new ProductView();
 
     public OrderItemView() {
         orderItemService = OrderItemService.getInstance();
@@ -80,6 +79,7 @@ public class OrderItemView {
                 }
                 showOrderItem(orderItemService.findByOrderId(orderId), InputOption.UPDATE);
                 setProductQuantity(productId, -orderItemService.findById(id).getQuantity());
+                setGrandTotal(orderId);
                 System.out.printf("Đã thêm '%s' số lượng '%s' vào giỏ hàng.\n", product.getName(), quantity);
             } catch (Exception e) {
                 System.out.println("Lỗi cú pháp. Vui lòng nhập lại!");
@@ -221,7 +221,10 @@ public class OrderItemView {
             id = AppUtils.retryParseLong();
             boolean isFindId = productService.existById(id);
             if (isFindId) {
-                isTrue = false;
+                Product product = productService.findById(id);
+                if (product.getQuantity() == 0)
+                    System.out.println("Số lượng sản phẩm đã hết, vui lòng chọn sản phẩm khác!");
+                else isTrue = false;
             } else {
                 System.out.println("Không tìm thấy! Vui lòng nhập lại");
             }
@@ -326,7 +329,7 @@ public class OrderItemView {
         boolean isTrue = true;
         do {
             try {
-                menuDeleteOrderItem();
+                AppUtils.menuDelete();
                 option = Integer.parseInt(scanner.nextLine());
                 switch (option) {
                     case 1: {
@@ -356,16 +359,6 @@ public class OrderItemView {
         } while (isTrue);
     }
 
-    private static void menuDeleteOrderItem() {
-        System.out.println("░░░░░ BẠN CÓ MUỐN XÓA KHÔNG? ░░░░░");
-        System.out.println("░            1. Có.              ░");
-        System.out.println("░            2. Không.           ░");
-        System.out.println("░            0. Thoát.           ░");
-        System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
-        System.out.println("Nhập lựa chọn: ");
-        System.out.print(" => ");
-    }
-
     public void setGrandTotal(long orderId) {
         Order order = orderService.findById(orderId);
         List<OrderItem> orderItems = orderItemService.findByOrderId(orderId);
@@ -391,5 +384,14 @@ public class OrderItemView {
         Product product = productService.findProductById(productId);
         product.setQuantity(product.getQuantity() + quantityDifference);
         productService.update(product);
+    }
+
+    public void restoreOrderItem(long orderIdDeleted) {
+        List<OrderItem> orderItemsDeleted = orderItemService.findByOrderIdDeleted(orderIdDeleted);
+        for (OrderItem orderItem : orderItemsDeleted) {
+            orderItemService.add(orderItem);
+            setProductQuantity(orderItem.getProductId(), orderItem.getQuantity());
+            orderItemService.deleteByIdInFileDeleted(orderItem.getId());
+        }
     }
 }
