@@ -219,6 +219,9 @@ public class OrderView {
         if (option == InputOption.SHOW) {
             showAllItemOfOrder();
         }
+        if(option == InputOption.SORT){
+            AppUtils.pressAnyKeyToContinue();
+        }
     }
 
     public void showAllItemOfOrder() {
@@ -1103,7 +1106,7 @@ public class OrderView {
 
     private long inputIdDeleted() {
         long id;
-        System.out.print("Nhập ID hóa đơn cần khôi phục: ");
+        System.out.println("Nhập ID hóa đơn cần khôi phục: ");
         boolean isTrue = true;
         do {
             id = AppUtils.retryParseLong();
@@ -1133,7 +1136,7 @@ public class OrderView {
                         orderItemView.restoreOrderItem(id);
                         orderService.add(orderDeleted);
                         orderService.deleteInFileDeleted(id);
-                        System.out.printf("Khôi phục đơn hàng '%s' của khách hàng %s thành công!\n", id, orderDeleted.getFullName());
+                        System.out.printf("===> Khôi phục đơn hàng '%s' của khách hàng '%s' thành công!\n", id, orderDeleted.getFullName());
                         AppUtils.pressAnyKeyToContinue();
                         showOrder(orderService.findAllDelete(), InputOption.DELETE);
                         break;

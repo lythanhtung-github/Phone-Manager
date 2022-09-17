@@ -1,0 +1,27 @@
+I. TÀI KHOẢN
+    1.Tên người dùng bao gồm các ký tự chữ và số (a-zA-Z0-9), chữ thường hoặc chữ hoa.
+    2.Tên người dùng được phép có dấu chấm (.), Dấu gạch dưới (_) và dấu gạch ngang (-).
+    3.Dấu chấm (.), Dấu gạch dưới (_) hoặc dấu gạch ngang (-) không được là ký tự đầu tiên hoặc cuối cùng.
+    4.Dấu chấm (.), Dấu gạch dưới (_) hoặc dấu gạch ngang (-) không xuất hiện liên tiếp, ví dụ: java..regex
+    5.Số lượng ký tự phải từ 6 đến 20.
+
+II. MẬT KHẨU
+    1.Mật khẩu phải chứa ít nhất một chữ số [0-9].
+    2.Mật khẩu phải chứa ít nhất một ký tự Latinh viết thường [az].
+    3.Mật khẩu phải chứa ít nhất một ký tự Latinh viết hoa [AZ].
+    4.Mật khẩu phải chứa ít nhất một ký tự đặc biệt như: !, @, #, &, (, ), dấu cách.
+    5.Mật khẩu phải có độ dài ít nhất 8 ký tự và tối đa 20 ký tự.
+
+III. HỌ VÀ TÊN
+    1. Họ và tên phải bắt đầu bằng chữ in hoa.
+    2. Họ và tên có thể ghi dấu.
+
+IV. SỐ ĐIỆN THOẠI
+    1. Số điện thoại bao gồm 10 chữ số bắt đầu bằng chữ số 0.
+
+V. EMAIL
+    1. Email phải đúng định dạnh "xxxxxxx@xxxxxx.com".
+
+VI. ĐỊA CHỈ
+    1. Địa chỉ phải bắt đầu bằng chữ in hoa.
+    2. Địa chỉ có thể ghi dấu.
