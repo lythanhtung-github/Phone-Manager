@@ -10,6 +10,7 @@ import java.util.List;
 
 public class ProductService implements IProductService {
     public final static String DATA_PRODUCT_PATH = "data/products.csv";
+    public final static String DATA_PRODUCT_DELETED_PATH = "data/data_deleted/product_deleted.csv";
     private static ProductService instance;
 
     private ProductService() {
@@ -24,6 +25,16 @@ public class ProductService implements IProductService {
     public List<Product> findAll() {
         List<Product> products = new ArrayList<>();
         List<String> lines = CSVUtils.read(DATA_PRODUCT_PATH);
+        for (String line : lines) {
+            products.add(Product.parse(line));
+        }
+        return products;
+    }
+
+    @Override
+    public List<Product> findAllDeleted() {
+        List<Product> products = new ArrayList<>();
+        List<String> lines = CSVUtils.read(DATA_PRODUCT_DELETED_PATH);
         for (String line : lines) {
             products.add(Product.parse(line));
         }
@@ -56,12 +67,26 @@ public class ProductService implements IProductService {
     @Override
     public void deleteById(long id) {
         List<Product> products = findAll();
+        List<Product> productsDeleted = findAllDeleted();
+        for (int i = 0; i < products.size(); i++) {
+            if ((products.get(i)).getId() == id) {
+                productsDeleted.add(products.get(i));
+                products.remove(products.get(i));
+            }
+        }
+        CSVUtils.write(DATA_PRODUCT_PATH, products);
+        CSVUtils.write(DATA_PRODUCT_DELETED_PATH, productsDeleted);
+    }
+
+    @Override
+    public void deleteInFileDeleted(long id) {
+        List<Product> products = findAllDeleted();
         for (int i = 0; i < products.size(); i++) {
             if ((products.get(i)).getId() == id) {
                 products.remove(products.get(i));
             }
         }
-        CSVUtils.write(DATA_PRODUCT_PATH, products);
+        CSVUtils.write(DATA_PRODUCT_DELETED_PATH, products);
     }
 
     @Override
@@ -77,6 +102,16 @@ public class ProductService implements IProductService {
     @Override
     public Product findById(long id) {
         List<Product> products = findAll();
+        for (Product product : products) {
+            if (product.getId() == id)
+                return product;
+        }
+        return null;
+    }
+
+    @Override
+    public Product findByIdDeleted(long id) {
+        List<Product> products = findAllDeleted();
         for (Product product : products) {
             if (product.getId() == id)
                 return product;
@@ -256,4 +291,10 @@ public class ProductService implements IProductService {
         }
         return null;
     }
+
+    @Override
+    public boolean existByIdDeleted(long id) {
+        return findByIdDeleted(id) != null;
+    }
+
 }

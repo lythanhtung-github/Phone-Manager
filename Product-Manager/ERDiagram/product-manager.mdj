@@ -2578,9 +2578,9 @@
 										"$ref": "AAAAAAGDTA+gFPNTs2A="
 									},
 									"font": "Arial;13;0",
-									"left": 172,
+									"left": 171,
 									"top": 428,
-									"width": 14.82177734375,
+									"width": 16.97998046875,
 									"height": 13,
 									"alpha": 0.5911574063669884,
 									"distance": 27.80287754891569,
@@ -2588,7 +2588,7 @@
 										"$ref": "AAAAAAGDTA+gFPNW9PE="
 									},
 									"edgePosition": 2,
-									"text": "+1"
+									"text": "+n"
 								},
 								{
 									"_type": "EdgeLabelView",
@@ -3821,7 +3821,7 @@
 								"_parent": {
 									"$ref": "AAAAAAGDTA+gFPNSiK8="
 								},
-								"name": "1",
+								"name": "n",
 								"reference": {
 									"$ref": "AAAAAAGCxI/UGmOYk2g="
 								}
@@ -4603,7 +4603,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGDRdZqFfsbYHQ="
 									},
-									"name": "String userName"
+									"name": "String userName",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -4611,7 +4612,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGDRdZqFfsbYHQ="
 									},
-									"name": "String passWord"
+									"name": "String passWord",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -4619,7 +4621,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGDRdZqFfsbYHQ="
 									},
-									"name": "Role role"
+									"name": "Role role",
+									"type": ""
 								}
 							]
 						},
@@ -4764,7 +4767,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGDTAHpfvFwP5A="
 							},
-							"name": "ADMIN"
+							"name": "ADMIN",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -4772,7 +4776,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGDTAHpfvFwP5A="
 							},
-							"name": "USER"
+							"name": "USER",
+							"type": ""
 						}
 					]
 				},

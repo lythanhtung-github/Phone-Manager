@@ -9,7 +9,7 @@ import java.util.List;
 
 public class OrderItemService implements IOrderItemService {
     public final static String DATA_ORDER_ITEM_PATH = "data/order_items.csv";
-    public final static String DATA_ORDER_ITEM_DELETE_PATH = "data/data_delete/order_items_delete.csv";
+    public final static String DATA_ORDER_ITEM_DELETE_PATH = "data/data_deleted/order_items_deleted.csv";
     private static OrderItemService instance;
 
     private OrderItemService() {

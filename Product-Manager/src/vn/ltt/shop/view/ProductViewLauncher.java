@@ -11,7 +11,8 @@ public class ProductViewLauncher {
     private static final int DELETE = 4;
     private static final int FIND = 5;
     private static final int SORT = 6;
-    private static final int RETURN = 7;
+    private static final int RESTORE = 7;
+    private static final int RETURN = 8;
     private static final int EXIT = 0;
     private static final Scanner scanner = new Scanner(System.in);
     private static final int RETURN_MEMBER = 4;
@@ -44,6 +45,9 @@ public class ProductViewLauncher {
                     case SORT:
                         productView.sortProduct();
                         break;
+                    case RESTORE:
+                        productView.restoreProduct();
+                        break;
                     case RETURN:
                         isTrue = false;
                         break;
@@ -72,7 +76,8 @@ public class ProductViewLauncher {
         System.out.println("░        4. Xóa sản phẩm.                ░");
         System.out.println("░        5. Tìm kiếm sản phẩm.           ░");
         System.out.println("░        6. Sắp xếp sản phẩm.            ░");
-        System.out.println("░        7. Trở lại.                     ░");
+        System.out.println("░        7. Khôi phục sản phẩm.          ░");
+        System.out.println("░        8. Trở lại.                     ░");
         System.out.println("░        0. Thoát.                       ░");
         System.out.println("░                                        ░");
         System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");

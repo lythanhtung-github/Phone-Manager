@@ -10,6 +10,7 @@ import vn.ltt.shop.utils.InstantUtils;
 import vn.ltt.shop.utils.TypeSort;
 import vn.ltt.shop.utils.ValidateUtils;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -1121,7 +1122,7 @@ public class OrderView {
     }
 
     public void restoreOrder() {
-        List<Order> ordersDelete = orderService.findAllDelete();
+        List<Order> ordersDelete = orderService.findAllDeleted();
         if (ordersDelete != null) {
             showOrder(ordersDelete, InputOption.DELETE);
             boolean isTrue = true;
@@ -1133,12 +1134,15 @@ public class OrderView {
                     case "y":
                         long id = inputIdDeleted();
                         Order orderDeleted = orderService.findByIdDeleted(id);
+                        Instant createdAt = orderDeleted.getCreatedAt();
                         orderItemView.restoreOrderItem(id);
                         orderService.add(orderDeleted);
+                        orderDeleted.setCreatedAt(createdAt);
+                        orderService.update(orderDeleted);
                         orderService.deleteInFileDeleted(id);
                         System.out.printf("===> Khôi phục đơn hàng '%s' của khách hàng '%s' thành công!\n", id, orderDeleted.getFullName());
                         AppUtils.pressAnyKeyToContinue();
-                        showOrder(orderService.findAllDelete(), InputOption.DELETE);
+                        showOrder(orderService.findAllDeleted(), InputOption.DELETE);
                         break;
                     case "q":
                         isTrue = false;

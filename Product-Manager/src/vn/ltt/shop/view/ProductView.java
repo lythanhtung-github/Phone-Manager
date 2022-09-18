@@ -1,5 +1,6 @@
 package vn.ltt.shop.view;
 
+import vn.ltt.shop.model.Order;
 import vn.ltt.shop.model.Product;
 import vn.ltt.shop.service.IProductService;
 import vn.ltt.shop.service.ProductService;
@@ -8,6 +9,7 @@ import vn.ltt.shop.utils.InstantUtils;
 import vn.ltt.shop.utils.TypeSort;
 import vn.ltt.shop.utils.ValidateUtils;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -116,9 +118,12 @@ public class ProductView {
         double price;
         do {
             price = AppUtils.retryParseDouble();
-            if (price < 0 || price > 100000000D)
-                System.out.println("Giá sản phẩm không thể âm. Vui lòng nhập lại!");
-        } while (price < 0 || price > 100000000D);
+            if (price <= 0 || price > 100000000D)
+                if (price < 0)
+                    System.out.println("Giá sản phẩm không thể âm. Vui lòng nhập lại!");
+                else
+                    System.out.println("Giá sản phẩm không thể bằng 0. Vui lòng nhập lại!");
+        } while (price <= 0 || price > 100000000D);
         return price;
     }
 
@@ -588,5 +593,58 @@ public class ProductView {
         System.out.println("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
         System.out.println("Nhập lựa chọn: ");
         System.out.print(" => ");
+    }
+
+    public void restoreProduct() {
+        List<Product> productsDeleted = productService.findAllDeleted();
+        if (productsDeleted != null) {
+            showProduct(productsDeleted, InputOption.DELETE);
+            boolean isTrue = true;
+            do {
+                System.out.println("Chọn 'y' để chọn sản phẩm cần khôi phục \t|\t 'q' để trở lại.");
+                System.out.print(" => ");
+                String option = scanner.nextLine();
+                switch (option) {
+                    case "y":
+                        long id = inputIdDeleted();
+                        Product productDeleted = productService.findByIdDeleted(id);
+                        Instant createdAt = productDeleted.getCreatedAt();
+                        productService.add(productDeleted);
+                        productDeleted.setCreatedAt(createdAt);
+                        productService.update(productDeleted);
+                        productService.deleteInFileDeleted(id);
+                        System.out.printf("===> Khôi phục sản phẩm '%s' có id '%s' thành công!\n", productDeleted.getName(), id);
+                        AppUtils.pressAnyKeyToContinue();
+                        showProduct(productService.findAllDeleted(), InputOption.DELETE);
+                        break;
+                    case "q":
+                        isTrue = false;
+                        break;
+                    default:
+                        System.out.println("Lựa chọn sai. Vui lòng nhập lại!");
+                        System.out.print(" => ");
+                        break;
+                }
+            } while (isTrue);
+        } else {
+            System.out.println("Không có đơn hàng cần khôi phục!");
+            AppUtils.pressAnyKeyToContinue();
+        }
+    }
+
+    private long inputIdDeleted() {
+        long id;
+        System.out.println("Nhập ID sản phẩm cần khôi phục: ");
+        boolean isTrue = true;
+        do {
+            id = AppUtils.retryParseLong();
+            boolean isFindId = productService.existByIdDeleted(id);
+            if (isFindId) {
+                isTrue = false;
+            } else {
+                System.out.println("Không tìm thấy, vui lòng nhập lại!");
+            }
+        } while (isTrue);
+        return id;
     }
 }

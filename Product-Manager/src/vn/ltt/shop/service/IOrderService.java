@@ -8,7 +8,7 @@ import java.util.List;
 public interface IOrderService {
     List<Order> findAll();
 
-    List<Order> findAllDelete();
+    List<Order> findAllDeleted();
 
     void add(Order newOrder);
 

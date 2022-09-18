@@ -10,7 +10,7 @@ import java.util.List;
 
 public class OrderService implements IOrderService {
     public final static String DATA_ORDER_PATH = "data/orders.csv";
-    public final static String DATA_ORDER_DELETE_PATH = "data/data_delete/orders_delete.csv";
+    public final static String DATA_ORDER_DELETE_PATH = "data/data_deleted/orders_deleted.csv";
     private static OrderService instance;
 
     private OrderService() {
@@ -32,7 +32,7 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public List<Order> findAllDelete() {
+    public List<Order> findAllDeleted() {
         List<Order> orders = new ArrayList<>();
         List<String> lines = CSVUtils.read(DATA_ORDER_DELETE_PATH);
         for (String line : lines) {
@@ -69,7 +69,7 @@ public class OrderService implements IOrderService {
     @Override
     public void delete(long id) {
         List<Order> orders = findAll();
-        List<Order> ordersDelete = findAllDelete();
+        List<Order> ordersDelete = findAllDeleted();
         for (int i = 0; i < orders.size(); i++) {
             if ((orders.get(i)).getId() == id) {
                 ordersDelete.add(orders.get(i));
@@ -82,7 +82,7 @@ public class OrderService implements IOrderService {
 
     @Override
     public void deleteInFileDeleted(long id) {
-        List<Order> orders = findAllDelete();
+        List<Order> orders = findAllDeleted();
         for (int i = 0; i < orders.size(); i++) {
             if ((orders.get(i)).getId() == id) {
                 orders.remove(orders.get(i));
@@ -103,7 +103,7 @@ public class OrderService implements IOrderService {
 
     @Override
     public Order findByIdDeleted(long id) {
-        List<Order> orders = findAllDelete();
+        List<Order> orders = findAllDeleted();
         for (Order order : orders) {
             if (order.getId() == id)
                 return order;
