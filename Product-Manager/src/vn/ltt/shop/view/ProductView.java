@@ -1,6 +1,5 @@
 package vn.ltt.shop.view;
 
-import vn.ltt.shop.model.Order;
 import vn.ltt.shop.model.Product;
 import vn.ltt.shop.service.IProductService;
 import vn.ltt.shop.service.ProductService;
@@ -118,12 +117,10 @@ public class ProductView {
         double price;
         do {
             price = AppUtils.retryParseDouble();
-            if (price <= 0 || price > 100000000D)
-                if (price < 0)
-                    System.out.println("Giá sản phẩm không thể âm. Vui lòng nhập lại!");
-                else
-                    System.out.println("Giá sản phẩm không thể bằng 0. Vui lòng nhập lại!");
-        } while (price <= 0 || price > 100000000D);
+            if (price <= 100000 || price > 100000000D)
+                if (price < 100000)
+                    System.out.println("Giá sản phẩm ít nhất là '100.000 VNĐ'. Vui lòng nhập lại!");
+        } while (price <= 100000 || price > 100000000D);
         return price;
     }
 

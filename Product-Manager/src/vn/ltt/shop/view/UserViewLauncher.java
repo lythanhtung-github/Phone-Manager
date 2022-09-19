@@ -16,6 +16,8 @@ public class UserViewLauncher {
     private static final Scanner scanner = new Scanner(System.in);
     private static final UserView userView = new UserView();
 
+    private static final UserService userService = UserService.getInstance();
+
     public static void launch() {
         boolean isTrue = true;
         do {
@@ -24,7 +26,7 @@ public class UserViewLauncher {
                 int option = Integer.parseInt(scanner.nextLine());
                 switch (option) {
                     case SHOW:
-                        userView.showUser(UserService.getInstance().findAll(), InputOption.SHOW);
+                        userView.showUser(userService.findAll(), InputOption.SHOW);
                         break;
                     case ADD:
                         userView.addUser();
