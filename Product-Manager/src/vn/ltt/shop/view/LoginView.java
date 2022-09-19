@@ -88,6 +88,8 @@ public class LoginView {
                 return true;
             } else {
                 try {
+                    System.out.println("-  " +
+                            "Mã OTP sai!");
                     menuOTP();
                     option = Integer.parseInt(scanner.nextLine());
                     switch (option) {
