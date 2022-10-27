@@ -1,1 +1,1 @@
-# Phone-Manager
+#CASE STUDY MODULE 2 - JAVA CORE
