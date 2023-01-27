@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 PHONE STORE MANAGER: QUẢN LÝ CỬA HÀNG ĐIỆN THOẠI
 
 1. Kiến thức & Công nghệ áp dụng: Java Core
@@ -30,3 +31,6 @@ PHONE STORE MANAGER: QUẢN LÝ CỬA HÀNG ĐIỆN THOẠI
 - Thống kê
 ![Screenshot](img/thongke.png)
 ![Screenshot](img/thongkenam.png)
+=======
+#CASE STUDY MODULE 2 - JAVA CORE
+>>>>>>> 804fe622675ad799d236231979fb334e24f7a6aa
